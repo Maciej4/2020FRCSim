@@ -10,7 +10,7 @@ public class IntakeController : MonoBehaviour {
 
     public float upPower = 300f;
     public float fwdPower = 300f;
-
+    public float shooterError = 35f;
     void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.name.StartsWith("Ball") && clip.Count < 5)
@@ -48,6 +48,9 @@ public class IntakeController : MonoBehaviour {
                     clip[0].transform.SetParent(null);
                     clip.RemoveAt(0);
                     rb.AddForce(transform.up * upPower + transform.forward * fwdPower, ForceMode.Acceleration);
+                    rb.AddForce(transform.up * Random.Range(-shooterError,shooterError) + 
+                        transform.forward * Random.Range(-shooterError, shooterError) + 
+                        transform.right * Random.Range(-shooterError, shooterError));
                     rb.AddTorque(Random.insideUnitCircle.normalized * 3f); //Random spin
 
                     reloadStart = Time.time;

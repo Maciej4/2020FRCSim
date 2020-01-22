@@ -10276,6 +10276,7 @@ MonoBehaviour:
   reloading: 0
   upPower: 300
   fwdPower: 300
+  shooterError: 35
 --- !u!1 &1873211644
 GameObject:
   m_ObjectHideFlags: 0
