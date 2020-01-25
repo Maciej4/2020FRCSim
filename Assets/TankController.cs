@@ -101,7 +101,7 @@ public class TankController : MonoBehaviour
     private void cheat()
     {
         Vector3 shotPoint = new Vector3(-1.680274f, 0.3f, -2.951602f);
-        Vector3 finalTarget = new Vector3(-1.722f, 0.3f, -8.876f);
+        Vector3 finalTarget = new Vector3(-1.722f, 0.3f, -8.120f);
 
         // Determine which direction to rotate towards
         Vector3 targetDirection = shotPoint - transform.position;
@@ -111,7 +111,7 @@ public class TankController : MonoBehaviour
 
         // Rotate the forward vector towards the target direction by one step
         Vector3 newDirection = Vector3.RotateTowards(transform.forward, targetDirection, singleStep, 0.0f);
-
+        /*
         if (Quaternion.Dot(transform.rotation, Quaternion.LookRotation(newDirection)) <= 0.999999f && Vector3.Distance(transform.position, shotPoint) > 0.05f)
         {
             transform.rotation = Quaternion.LookRotation(newDirection);
@@ -123,12 +123,14 @@ public class TankController : MonoBehaviour
         }
         else
         {
+            */
             Vector3 shotDirection = finalTarget - transform.position;
 
             // Rotate the forward vector towards the target direction by one step
             Vector3 newShotDir = Vector3.RotateTowards(transform.forward, shotDirection, singleStep, 0.0f);
 
             transform.rotation = Quaternion.LookRotation(newShotDir);
-        }
+        //}
+        
     }
 }
