@@ -10,7 +10,7 @@ public class IntakeController : MonoBehaviour {
 
     public float upPower = 300f;
     public float fwdPower = 300f;
-    public float shooterError = 35f;
+    public float shooterError = 28f;
     void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.name.StartsWith("Ball") && clip.Count < 5)

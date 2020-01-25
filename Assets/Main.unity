@@ -262,6 +262,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pointValue: 1
   mainScoreboard: {fileID: 275160767}
+  isRed: 0
 --- !u!65 &35083410
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1717,7 +1718,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a9fc6b1f70287f4285b668c71c14fd7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  score: 0
+  redScore: 0
+  blueScore: 0
   m_MyText: {fileID: 0}
 --- !u!1 &287982975
 GameObject:
@@ -2289,6 +2291,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pointValue: 1
   mainScoreboard: {fileID: 275160767}
+  isRed: 1
 --- !u!1 &432251562
 GameObject:
   m_ObjectHideFlags: 0
@@ -3554,6 +3557,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pointValue: 2
   mainScoreboard: {fileID: 275160767}
+  isRed: 1
 --- !u!1 &633956098
 GameObject:
   m_ObjectHideFlags: 0
@@ -4892,6 +4896,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pointValue: 3
   mainScoreboard: {fileID: 275160767}
+  isRed: 0
 --- !u!65 &826331533
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -7136,6 +7141,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pointValue: 2
   mainScoreboard: {fileID: 275160767}
+  isRed: 0
 --- !u!65 &1302617983
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -7578,7 +7584,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1329704011}
   m_Layer: 0
-  m_Name: Score Plates (1)
+  m_Name: Blue Score Plate
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8526,7 +8532,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1460489412}
   m_Layer: 0
-  m_Name: Score Plates
+  m_Name: Red Score Plate
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9832,6 +9838,12 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 25642d32d685e224d8452519fd1e075d, type: 2}
+    - target: {fileID: -8055105466679149292, guid: 6849d1e5a9cc3604db6df91bbf471470,
+        type: 3}
+      propertyPath: m_Icon
+      value: 
+      objectReference: {fileID: 7250588514170254948, guid: 0000000000000000d000000000000000,
+        type: 0}
     - target: {fileID: -4216859302048453862, guid: 6849d1e5a9cc3604db6df91bbf471470,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -10276,7 +10288,7 @@ MonoBehaviour:
   reloading: 0
   upPower: 300
   fwdPower: 300
-  shooterError: 35
+  shooterError: 28
 --- !u!1 &1873211644
 GameObject:
   m_ObjectHideFlags: 0
@@ -11537,6 +11549,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pointValue: 3
   mainScoreboard: {fileID: 275160767}
+  isRed: 1
 --- !u!1 &2035238066
 GameObject:
   m_ObjectHideFlags: 0
