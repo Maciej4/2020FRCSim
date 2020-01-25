@@ -11,6 +11,8 @@ public class IntakeController : MonoBehaviour {
     public float upPower = 300f;
     public float fwdPower = 300f;
     public float shooterError = 28f;
+    public float distancePower;
+
     void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.name.StartsWith("Ball") && clip.Count < 5)
@@ -51,6 +53,23 @@ public class IntakeController : MonoBehaviour {
                     rb.AddForce(transform.up * Random.Range(-shooterError,shooterError) + 
                         transform.forward * Random.Range(-shooterError, shooterError) + 
                         transform.right * Random.Range(-shooterError, shooterError));
+                    rb.AddTorque(Random.insideUnitCircle.normalized * 3f); //Random spin
+
+                    reloadStart = Time.time;
+                    reloading = true;
+                }
+                
+                if (Input.GetKeyDown(KeyCode.LeftBracket))
+                {
+                    Vector3 goalPos = new Vector3(-1.722f, 0.0f, -8.041f);
+                    float positionAwayFromGoal = (float)(System.Math.Sqrt((System.Math.Pow(transform.position.x - goalPos.x, 2)) + (System.Math.Pow(transform.position.z - goalPos.z, 2))));
+                    distancePower = positionAwayFromGoal  / 4.3f;
+                    Debug.Log("distancePower: " + distancePower);
+                    Rigidbody rb = clip[0].GetComponent<Rigidbody>();
+                    rb.isKinematic = false;
+                    clip[0].transform.SetParent(null);
+                    clip.RemoveAt(0);
+                    rb.AddForce(transform.up * upPower + transform.forward * fwdPower * distancePower, ForceMode.Acceleration);
                     rb.AddTorque(Random.insideUnitCircle.normalized * 3f); //Random spin
 
                     reloadStart = Time.time;
