@@ -18,6 +18,7 @@ public class IntakeController : MonoBehaviour {
         if (other.gameObject.name.StartsWith("Ball") && clip.Count < 5)
         {
             clip.Add(other.gameObject);
+            clip[clip.Count - 1].GetComponent<Rigidbody>().isKinematic = true;
             clip[clip.Count - 1].transform.SetParent(this.transform);
             if (clip.Count == 1)
             {
@@ -34,6 +35,7 @@ public class IntakeController : MonoBehaviour {
     {
         if (clip.Count != 0)
         {
+            
             clip[clip.Count - 1].transform.rotation = transform.rotation;
             clip[clip.Count - 1].GetComponent<Rigidbody>().isKinematic = true;
 
@@ -58,8 +60,7 @@ public class IntakeController : MonoBehaviour {
                     reloadStart = Time.time;
                     reloading = true;
                 }
-                
-                if (Input.GetKeyDown(KeyCode.LeftBracket))
+                else if (Input.GetKeyDown(KeyCode.LeftBracket))
                 {
                     Vector3 goalPos = new Vector3(-1.722f, 0.0f, -8.041f);
                     float positionAwayFromGoal = (float)(System.Math.Sqrt((System.Math.Pow(transform.position.x - goalPos.x, 2)) + (System.Math.Pow(transform.position.z - goalPos.z, 2))));
@@ -74,6 +75,20 @@ public class IntakeController : MonoBehaviour {
 
                     reloadStart = Time.time;
                     reloading = true;
+                }
+                else
+                {
+                    for (int i = clip.Count; i >= 0; i--)
+                    {
+                        if (i == 1)
+                        {
+                            clip[i].transform.localPosition = new Vector3(0, 1.5f, -0.5f);
+                        }
+                        else
+                        {
+                            clip[i].transform.localPosition = new Vector3(0.5f * (i), 1.5f, -0.5f);
+                        }
+                    }
                 }
             }
         }
