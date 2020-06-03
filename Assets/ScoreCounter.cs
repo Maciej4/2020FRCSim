@@ -9,7 +9,9 @@ public class ScoreCounter : MonoBehaviour
     public int redScore = 0;
     public int blueScore = 0;
     public Text m_MyText;
+    public ZMQClient zmqClient;
     private string gamePeriod = "Auto";
+    private string controlledBy = "";
     private float offsetTime;
     private float timeNow;
     private void Start()
@@ -22,8 +24,9 @@ public class ScoreCounter : MonoBehaviour
     {
         timeNow = Time.time - offsetTime;
         findPeriod();
+        findControlMode();
 
-        m_MyText.text = "Red Score:" + redScore + "\nBlue Score:" + blueScore + "\nTime: " + timeNow.ToString("00.##") + "\nGame Period: " + gamePeriod;
+        m_MyText.text = "Red Score:" + redScore + "\nBlue Score:" + blueScore + "\nTime: " + timeNow.ToString("00.##") + "\nGame Period: " + gamePeriod + controlledBy;
 
         if (Input.GetKeyDown(KeyCode.Y))
         {
@@ -50,14 +53,29 @@ public class ScoreCounter : MonoBehaviour
             redScore = 0;
         }
     }
+
+    public void findControlMode()
+    {
+        if (zmqClient.zmqThread.connectionStatus)
+        {
+            controlledBy = "\nExternal Java!";
+        }
+        else
+        {
+            controlledBy = "";
+        }
+    }
+
     public void addToScoreRed(int value)
     {
         redScore += value;
     }
+
     public void addToScoreBlue(int value)
     {
         blueScore += value;
     }
+
     public void resetScore()
     {
         redScore = 0;

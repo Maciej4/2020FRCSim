@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class IntakeController : MonoBehaviour {
+    public Transform ballContainer;
     public List<GameObject> clip;
     public float reloadStart = 0;
     public float reloadTime = 0.1f;
@@ -10,7 +11,7 @@ public class IntakeController : MonoBehaviour {
 
     public float upPower = 300f;
     public float fwdPower = 300f;
-    public float shooterError = 28f;
+    public float shooterError = 10f;
     public float distancePower;
 
     void OnTriggerEnter(Collider other)
@@ -68,7 +69,7 @@ public class IntakeController : MonoBehaviour {
                     Debug.Log("distancePower: " + distancePower);
                     Rigidbody rb = clip[0].GetComponent<Rigidbody>();
                     rb.isKinematic = false;
-                    clip[0].transform.SetParent(null);
+                    clip[0].transform.SetParent(ballContainer);
                     clip.RemoveAt(0);
                     rb.AddForce(transform.up * upPower + transform.forward * fwdPower * distancePower, ForceMode.Acceleration);
                     rb.AddTorque(Random.insideUnitCircle.normalized * 3f); //Random spin
@@ -78,9 +79,10 @@ public class IntakeController : MonoBehaviour {
                 }
                 else
                 {
-                    for (int i = clip.Count; i >= 0; i--)
+                    for (int i = clip.Count - 1; i >= 0; i--)
                     {
-                        if (i == 1)
+                        //Debug.Log("i: " + i + ", clipCount: " + clip.Count);
+                        if (i == 0)
                         {
                             clip[i].transform.localPosition = new Vector3(0, 1.5f, -0.5f);
                         }
