@@ -1,6 +1,8 @@
 # 2020FRCSim
 A simulator of the 2020 FRC game!
 
+##### *Important: Built in latest Unity Alpha 2020.2.0a13*
+
 ## Features
 
 ### Score Tracking
