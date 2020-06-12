@@ -8,12 +8,13 @@ public class ScoreCounter : MonoBehaviour
 {
     public int redScore = 0;
     public int blueScore = 0;
-    public Text m_MyText;
+    private Text m_MyText;
     public ZMQClient zmqClient;
     private string gamePeriod = "Auto";
     private string controlledBy = "";
     private float offsetTime;
     private float timeNow;
+
     private void Start()
     {
         m_MyText = this.transform.GetComponent<Text>();
@@ -22,6 +23,11 @@ public class ScoreCounter : MonoBehaviour
 
     private void Update()
     {
+        if (m_MyText is null) 
+        { 
+            m_MyText = this.transform.GetComponent<Text>();
+        }
+
         timeNow = Time.time - offsetTime;
         findPeriod();
         findControlMode();

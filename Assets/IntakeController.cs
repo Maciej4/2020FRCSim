@@ -11,7 +11,8 @@ public class IntakeController : MonoBehaviour {
 
     public float upPower = 300f;
     public float fwdPower = 300f;
-    public float shooterError = 10f;
+//    public float shooterError = 10f;
+    public float shooterError = 0f;
     public float distancePower;
 
     void OnTriggerEnter(Collider other)
@@ -49,13 +50,15 @@ public class IntakeController : MonoBehaviour {
                 if ((Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown("joystick button 0")))
                 {
                     Rigidbody rb = clip[0].GetComponent<Rigidbody>();
-                    rb.isKinematic = false;
-                    clip[0].transform.SetParent(null);
+                    clip[0].transform.localPosition = new Vector3(0, 2f, -0.5f);
+                    clip[0].transform.SetParent(ballContainer);
                     clip.RemoveAt(0);
-                    rb.AddForce(transform.up * upPower + transform.forward * fwdPower, ForceMode.Acceleration);
-                    rb.AddForce(transform.up * Random.Range(-shooterError,shooterError) + 
-                        transform.forward * Random.Range(-shooterError, shooterError) + 
-                        transform.right * Random.Range(-shooterError, shooterError));
+                    rb.isKinematic = false;
+                    //rb.AddForce(transform.up * upPower + transform.forward * fwdPower, ForceMode.Acceleration
+                    rb.AddForce(transform.up * 5f + transform.forward * 5f, ForceMode.Impulse);
+                    //rb.AddForce(transform.up * Random.Range(-shooterError,shooterError) + 
+                    //    transform.forward * Random.Range(-shooterError, shooterError) + 
+                    //    transform.right * Random.Range(-shooterError, shooterError));
                     rb.AddTorque(Random.insideUnitCircle.normalized * 3f); //Random spin
 
                     reloadStart = Time.time;
