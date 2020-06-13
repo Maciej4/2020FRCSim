@@ -8,7 +8,7 @@ public class CameraController : MonoBehaviour
 
     public int currentPos = 0;
     public int maxPos = 9;
-    public Vector3 robotRelPos = new Vector3(0, 2f, -1f);
+    public Vector3 robotRelPos = new Vector3(0, 0.5f, -1f);
     public Vector3 robotRelRot = new Vector3(0, 0, 0);
     public Vector3 pos1 = new Vector3(0, 2f, 0);
     public Vector3 pos2 = new Vector3(3.39f, 1.5f, -8.16f);

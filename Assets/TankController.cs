@@ -41,7 +41,7 @@ public class TankController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (!(zmqClient.zmqThread.robotPacket is null) && zmqClient.zmqThread.connectionStatus)
+        if (!(zmqClient.zmqThread is null) && !(zmqClient.zmqThread.robotPacket is null) && zmqClient.zmqThread.connectionStatus)
         {
             tankDrive(zmqClient.zmqThread.robotPacket.leftPower, zmqClient.zmqThread.robotPacket.rightPower);
             zmqClient.zmqThread.unityPacket.heading = this.transform.rotation.eulerAngles.y - 180f;

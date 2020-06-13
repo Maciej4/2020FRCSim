@@ -15,7 +15,10 @@ public class HumanInterface : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        mainAntenna.unityPacket.driveX = Input.GetAxis("Horizontal");
-        mainAntenna.unityPacket.driveY = Input.GetAxis("Vertical");
+        if (!(mainAntenna.unityPacket is null))
+        {
+            mainAntenna.unityPacket.driveX = Input.GetAxis("Horizontal");
+            mainAntenna.unityPacket.driveY = Input.GetAxis("Vertical");
+        }
     }
 }

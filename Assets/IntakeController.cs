@@ -4,113 +4,69 @@ using UnityEngine;
 
 public class IntakeController : MonoBehaviour {
     public Transform ballContainer;
+    public Transform nmfContainer;
+    public Transform robot;
     public List<GameObject> clip;
-    public float reloadStart = 0;
-    public float reloadTime = 0.1f;
-    public bool reloading = false;
 
-    public float upPower = 300f;
-    public float fwdPower = 300f;
-//    public float shooterError = 10f;
-    public float shooterError = 0f;
-    public float distancePower;
+    public float upPower = 6f;
+    public float fwdPower = 6f;
+    public float shooterError = 0.5f;
+    public Vector3 firePos = new Vector3(0f, 0.485f, -0.094f);
+
+    public Vector3[] nmfPos = new Vector3[] {
+        new Vector3(0.037f, 0.008f, 0.164f),
+        new Vector3(0.168f, 0.008f, 0.012f),
+        new Vector3(0.059f, 0.008f, -0.142f),
+        new Vector3(-0.131f, 0.008f, -0.104f),
+        new Vector3(-0.143f, 0.008f, 0.079f)
+    };
+
+    private void Start()
+    {
+        for (int i = 0; i < 5; i++)
+        {
+            clip.Add(null);
+        }
+    }
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.name.StartsWith("Ball") && clip.Count < 5)
+        if (other.gameObject.name.StartsWith("Ball"))
         {
-            clip.Add(other.gameObject);
-            clip[clip.Count - 1].GetComponent<Rigidbody>().isKinematic = true;
-            clip[clip.Count - 1].transform.SetParent(this.transform);
-            if (clip.Count == 1)
+            for (int i = 0; i < 5; i++)
             {
-                clip[clip.Count - 1].transform.localPosition = new Vector3(0, 1.5f, -0.5f);
-            }
-            else
-            {
-                clip[clip.Count - 1].transform.localPosition = new Vector3(0.5f * (clip.Count - 1), 1.5f, -0.5f);
-            }
-        }
-    }
-
-    private void Update()
-    {
-        if (clip.Count != 0)
-        {
-            
-            clip[clip.Count - 1].transform.rotation = transform.rotation;
-            clip[clip.Count - 1].GetComponent<Rigidbody>().isKinematic = true;
-
-            if (reloading && Time.time - reloadStart >= reloadTime)
-            {
-                reload();
-            }
-            else
-            {
-                if ((Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown("joystick button 0")))
+                if (clip[i] is null)
                 {
-                    Rigidbody rb = clip[0].GetComponent<Rigidbody>();
-                    clip[0].transform.localPosition = new Vector3(0, 2f, -0.5f);
-                    clip[0].transform.SetParent(ballContainer);
-                    clip.RemoveAt(0);
-                    rb.isKinematic = false;
-                    //rb.AddForce(transform.up * upPower + transform.forward * fwdPower, ForceMode.Acceleration
-                    rb.AddForce(transform.up * 5f + transform.forward * 5f, ForceMode.Impulse);
-                    //rb.AddForce(transform.up * Random.Range(-shooterError,shooterError) + 
-                    //    transform.forward * Random.Range(-shooterError, shooterError) + 
-                    //    transform.right * Random.Range(-shooterError, shooterError));
-                    rb.AddTorque(Random.insideUnitCircle.normalized * 3f); //Random spin
-
-                    reloadStart = Time.time;
-                    reloading = true;
-                }
-                else if (Input.GetKeyDown(KeyCode.LeftBracket))
-                {
-                    Vector3 goalPos = new Vector3(-1.722f, 0.0f, -8.041f);
-                    float positionAwayFromGoal = (float)(System.Math.Sqrt((System.Math.Pow(transform.position.x - goalPos.x, 2)) + (System.Math.Pow(transform.position.z - goalPos.z, 2))));
-                    distancePower = positionAwayFromGoal  / 4.3f;
-                    Debug.Log("distancePower: " + distancePower);
-                    Rigidbody rb = clip[0].GetComponent<Rigidbody>();
-                    rb.isKinematic = false;
-                    clip[0].transform.SetParent(ballContainer);
-                    clip.RemoveAt(0);
-                    rb.AddForce(transform.up * upPower + transform.forward * fwdPower * distancePower, ForceMode.Acceleration);
-                    rb.AddTorque(Random.insideUnitCircle.normalized * 3f); //Random spin
-
-                    reloadStart = Time.time;
-                    reloading = true;
-                }
-                else
-                {
-                    for (int i = clip.Count - 1; i >= 0; i--)
-                    {
-                        //Debug.Log("i: " + i + ", clipCount: " + clip.Count);
-                        if (i == 0)
-                        {
-                            clip[i].transform.localPosition = new Vector3(0, 1.5f, -0.5f);
-                        }
-                        else
-                        {
-                            clip[i].transform.localPosition = new Vector3(0.5f * (i), 1.5f, -0.5f);
-                        }
-                    }
+                    clip[i] = (other.gameObject);
+                    clip[i].GetComponent<Rigidbody>().isKinematic = true;
+                    clip[i].GetComponent<SphereCollider>().isTrigger = true;
+                    clip[i].transform.SetParent(nmfContainer);
+                    clip[i].transform.localPosition = nmfPos[i];
+                    return;
                 }
             }
         }
     }
 
-    public void reload()
+    public void shoot(Transform ball) 
     {
-        reloading = false;
+        Rigidbody rb = ball.GetComponent<Rigidbody>();
+        ball.SetParent(robot);
+        ball.localPosition = firePos;
+        ball.SetParent(ballContainer);
+        ball.GetComponent<SphereCollider>().isTrigger = false;
+        clip[clip.IndexOf(ball.gameObject)] = null;
+        rb.isKinematic = false;
+        rb.AddForce(transform.up * upPower + transform.forward * fwdPower, ForceMode.Impulse);
 
-        int i = 0;
+        //Random added velocity
+        rb.AddForce(transform.up * Random.Range(-shooterError,shooterError) + 
+            transform.forward * Random.Range(-shooterError, shooterError) + 
+            transform.right * Random.Range(-shooterError, shooterError),
+            ForceMode.Impulse);
 
-        foreach (GameObject tempBall in clip)
-        {
-            tempBall.transform.localPosition = new Vector3(0.5f * i, 1.5f, -0.5f);
-
-            i++;
-        }
+        //Random spin
+        rb.AddTorque(Random.insideUnitCircle.normalized * 3f);
     }
 }
 
