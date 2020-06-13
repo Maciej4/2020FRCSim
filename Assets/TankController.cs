@@ -43,8 +43,13 @@ public class TankController : MonoBehaviour
     {
         if (!(zmqClient.zmqThread is null) && !(zmqClient.zmqThread.robotPacket is null) && zmqClient.zmqThread.connectionStatus)
         {
-            tankDrive(zmqClient.zmqThread.robotPacket.leftPower, zmqClient.zmqThread.robotPacket.rightPower);
-            zmqClient.zmqThread.unityPacket.heading = this.transform.rotation.eulerAngles.y - 180f;
+            double leftPower = (zmqClient.zmqThread.robotPacket.leftDriveMotor1Power + zmqClient.zmqThread.robotPacket.leftDriveMotor2Power)/2.0;
+            double rightPower = (zmqClient.zmqThread.robotPacket.rightDriveMotor1Power + zmqClient.zmqThread.robotPacket.rightDriveMotor2Power)/2.0;
+            leftPower = Mathf.Clamp((float)leftPower, -1.0f, 1.0f);
+            rightPower = Mathf.Clamp((float)rightPower, -1.0f, 1.0f);
+
+            tankDrive(leftPower, rightPower);
+            zmqClient.zmqThread.unityPacket.navXHeading = this.transform.rotation.eulerAngles.y - 180f;
             
         }
         else

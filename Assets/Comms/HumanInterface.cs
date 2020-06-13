@@ -17,8 +17,8 @@ public class HumanInterface : MonoBehaviour
     {
         if (!(mainAntenna.unityPacket is null))
         {
-            mainAntenna.unityPacket.driveX = Input.GetAxis("Horizontal");
-            mainAntenna.unityPacket.driveY = Input.GetAxis("Vertical");
+            mainAntenna.unityPacket.joyAxisArray[0] = Input.GetAxis("Horizontal");
+            mainAntenna.unityPacket.joyAxisArray[1] = Input.GetAxis("Vertical");
         }
     }
 }
