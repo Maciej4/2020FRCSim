@@ -23,8 +23,8 @@
     public double nmfColorB = 0.0;
     public double nmfEncoderInterfacePosition = 0.0;
     public double omniNeoPosition = 0.0;
-    public bool[] joyButtonArray;
-    public double[] joyAxisArray;
+    public bool[] joyButtonArray = new bool[] { false, false, false, false };
+    public double[] joyAxisArray = new double[] { 0.0, 0.0, 0.0, 0.0 };
     public int joyPOV = 0;
     public double navXHeading = 0.0;
 }
