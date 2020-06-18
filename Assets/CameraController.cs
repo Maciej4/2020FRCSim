@@ -5,20 +5,34 @@ using UnityEngine;
 public class CameraController : MonoBehaviour
 {
     public Transform robot;
+    public Vector3 robotRelRot = new Vector3(0, 0, 0);
+
+    public Vector3[] positions = new Vector3[] {
+        new Vector3(0, 0.5f, -1f),
+        new Vector3(0, 1f, -2f),
+        new Vector3(0, 2f, 0),
+        new Vector3(3.39f, 1.5f, -8.5f),
+        new Vector3(-0.304f, 1.5f, -9.0f),
+        new Vector3(-3.283f, 1.5f, -8.5f),
+        new Vector3(-3.432f, 1.5f, 8.5f),
+        new Vector3(0.134f, 1.5f, 9.0f),
+        new Vector3(3.369f, 1.5f, 8.5f),
+        new Vector3(10f, 4f, 0f)
+    };
+
+    public Vector3 cameraPos = new Vector3(0, 1f, -2f);
+    public float followDistance = 1.1f;
+    public float followDistanceX = 0f;
+    public float xAngle = 0f;
+    public float yAngle = 0.6f;
+    public Vector3 mouseStartPos = Vector3.zero;
+    public Vector2 mouseDelta = Vector2.zero;
+    public Vector2 startRots = Vector2.zero;
+    public float smoothTime = 0.25f;
+    private Vector3 velocity = Vector3.zero;
+    //private Vector3 rotVel = Vector3.zero;
 
     public int currentPos = 0;
-    public int maxPos = 9;
-    public Vector3 robotRelPos = new Vector3(0, 0.5f, -1f);
-    public Vector3 robotRelRot = new Vector3(0, 0, 0);
-    public Vector3 pos1 = new Vector3(0, 2f, 0);
-    public Vector3 pos2 = new Vector3(3.39f, 1.5f, -8.16f);
-    public Vector3 pos3 = new Vector3(-0.304f, 1.5f, -8.441f);
-    public Vector3 pos4 = new Vector3(-3.283f, 1.5f, -8.065f);
-    public Vector3 pos5 = new Vector3(-0.304f, 1.5f, -8.441f);
-    public Vector3 pos6 = new Vector3(-3.432f, 1.5f, 8.151f);
-    public Vector3 pos7 = new Vector3(0.134f, 1.5f, 8.464f);
-    public Vector3 pos8 = new Vector3(3.369f, 1.5f, 8.108f);
-    public Vector3 pos9 = new Vector3(10f, 4f, 0f);
 
     // Start is called before the first frame update
     void Start()
@@ -31,95 +45,104 @@ public class CameraController : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.P))
         {
-            addVal();
+            if (Input.GetKey(KeyCode.LeftShift))
+            {
+                decreasePosition();
+            }
+            else
+            {
+                increasePosition();
+            }
         }
 
         switch (currentPos) {
             case 0:
                 {
                     this.transform.parent = robot;
-                    this.transform.localPosition = robotRelPos;
+                    /*if (Vector3.Distance(this.transform.localPosition, positions[0]) < 0.05f)
+                    {
+                        this.transform.localPosition = positions[0];
+                        this.transform.localRotation = Quaternion.Euler(robotRelRot);
+                    }
+                    else if (Vector3.Distance(this.transform.localPosition, positions[0]) < 0.1f)
+                    {
+                        this.transform.localPosition = Vector3.SmoothDamp(this.transform.localPosition, positions[0], ref velocity, 0.5f);
+                        this.transform.localRotation = Quaternion.Euler(Vector3.SmoothDamp(this.transform.localRotation.eulerAngles, robotRelRot, ref rotVel, 0.1f));
+                    }
+                    else
+                    {
+                        this.transform.localPosition = Vector3.SmoothDamp(this.transform.localPosition, positions[0], ref velocity, 0.5f);
+                        this.transform.LookAt(robot);
+                    }*/
+                    this.transform.localPosition = positions[0];
                     this.transform.localRotation = Quaternion.Euler(robotRelRot);
                     break;
                 }
-
             case 1:
                 {
-                    this.transform.parent = null;
-                    this.transform.position = pos1;
-                    this.transform.LookAt(robot);
-                    break;
-                }
+                    if (Input.GetMouseButtonDown(0))
+                    {
+                        mouseStartPos = Input.mousePosition;
+                    }
 
-            case 2:
-                {
-                    this.transform.parent = null;
-                    this.transform.position = pos2;
-                    this.transform.LookAt(robot);
-                    break;
-                }
+                    if (Input.GetMouseButton(0))
+                    {
+                        mouseDelta = mouseStartPos - Input.mousePosition;
+                        mouseDelta *= 0.002f;
+                        xAngle = startRots.x + mouseDelta.x;
+                        yAngle = startRots.y + mouseDelta.y;
+                        yAngle = Mathf.Clamp(yAngle, 0f, Mathf.PI / 2 - 0.01f);
+                    }
 
-            case 3:
-                {
-                    this.transform.parent = null;
-                    this.transform.position = pos3;
+                    if (Input.GetMouseButtonUp(0))
+                    {
+                        startRots += mouseDelta;
+                        startRots.y = Mathf.Clamp(startRots.y, 0f, Mathf.PI / 2 - 0.01f);
+                    }
+
+                    followDistance += Input.mouseScrollDelta.y * 0.1f;
+                    followDistance = Mathf.Clamp(followDistance, 0.8f, 5f);
+
+                    this.transform.parent = robot;
+                    followDistanceX = followDistance * Mathf.Cos(yAngle);
+                    cameraPos.x = followDistanceX * Mathf.Sin(xAngle);
+                    cameraPos.y = followDistance * Mathf.Sin(yAngle);
+                    cameraPos.z = -followDistanceX * Mathf.Cos(xAngle);
+                    this.transform.localPosition = Vector3.SmoothDamp(this.transform.localPosition, cameraPos, ref velocity, smoothTime);
                     this.transform.LookAt(robot);
                     break;
                 }
-            case 4:
+            default: 
                 {
                     this.transform.parent = null;
-                    this.transform.position = pos4;
-                    this.transform.LookAt(robot);
-                    break;
-                }
-            case 5:
-                {
-                    this.transform.parent = null;
-                    this.transform.position = pos5;
-                    this.transform.LookAt(robot);
-                    break;
-                }
-            case 6:
-                {
-                    this.transform.parent = null;
-                    this.transform.position = pos6;
-                    this.transform.LookAt(robot);
-                    break;
-                }
-            case 7:
-                {
-                    this.transform.parent = null;
-                    this.transform.position = pos7;
-                    this.transform.LookAt(robot);
-                    break;
-                }
-            case 8:
-                {
-                    this.transform.parent = null;
-                    this.transform.position = pos8;
-                    this.transform.LookAt(robot);
-                    break;
-                }
-            case 9:
-                {
-                    this.transform.parent = null;
-                    this.transform.position = pos9;
+                    this.transform.position = Vector3.SmoothDamp(this.transform.position, positions[currentPos], ref velocity, 0.5f);
                     this.transform.LookAt(robot);
                     break;
                 }
         }
     }
 
-    public void addVal()
+    public void increasePosition()
     {
-        if (currentPos == maxPos)
+        if (currentPos >= positions.Length - 1)
         {
             currentPos = 0;
         }
         else
         {
             currentPos++;
+        }
+    }
+
+    public void decreasePosition()
+    { 
+        if (currentPos <= 0)
+        {
+            currentPos = positions.Length - 1;
+        }
+        else
+        {
+            currentPos--;
         }
     }
 }

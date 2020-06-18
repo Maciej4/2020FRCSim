@@ -90,8 +90,6 @@ public class ScoreCounter : MonoBehaviour
 
     public void resetArena()
     {
-       
         SceneManager.LoadScene("Main", LoadSceneMode.Single);
-       
     }
 }

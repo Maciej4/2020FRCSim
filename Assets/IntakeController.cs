@@ -6,6 +6,7 @@ public class IntakeController : MonoBehaviour {
     public Transform ballContainer;
     public Transform nmfContainer;
     public Transform robot;
+    public Rigidbody robotRigidbody;
     public List<GameObject> clip;
 
     public float upPower = 6f;
@@ -27,6 +28,8 @@ public class IntakeController : MonoBehaviour {
         {
             clip.Add(null);
         }
+
+        robotRigidbody = robot.GetComponent<Rigidbody>();
     }
 
     void OnTriggerEnter(Collider other)
@@ -57,6 +60,7 @@ public class IntakeController : MonoBehaviour {
         ball.GetComponent<SphereCollider>().isTrigger = false;
         clip[clip.IndexOf(ball.gameObject)] = null;
         rb.isKinematic = false;
+        rb.velocity = robotRigidbody.velocity;
         rb.AddForce(transform.up * upPower + transform.forward * fwdPower, ForceMode.Impulse);
 
         //Random added velocity
