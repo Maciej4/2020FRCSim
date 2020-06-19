@@ -5,19 +5,13 @@ using UnityEngine;
 public class CameraController : MonoBehaviour
 {
     public Transform robot;
-    public Vector3 robotRelRot = new Vector3(0, 0, 0);
+    public Vector3 robotRelRot = new Vector3(10, 0, 0);
 
     public Vector3[] positions = new Vector3[] {
-        new Vector3(0, 0.5f, -1f),
+        new Vector3(0, 0.275f, -0.5f),
         new Vector3(0, 1f, -2f),
         new Vector3(0, 2f, 0),
-        new Vector3(3.39f, 1.5f, -8.5f),
-        new Vector3(-0.304f, 1.5f, -9.0f),
-        new Vector3(-3.283f, 1.5f, -8.5f),
         new Vector3(-3.432f, 1.5f, 8.5f),
-        new Vector3(0.134f, 1.5f, 9.0f),
-        new Vector3(3.369f, 1.5f, 8.5f),
-        new Vector3(10f, 4f, 0f)
     };
 
     public Vector3 cameraPos = new Vector3(0, 1f, -2f);

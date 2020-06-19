@@ -8,6 +8,10 @@ public class DrivebaseController : MonoBehaviour
     public Rigidbody robotRigidbody;
     public WheelCollider leftWheel;
     public WheelCollider rightWheel;
+    public WheelCollider lfwc;
+    public WheelCollider rfwc;
+    public WheelCollider lbwc;
+    public WheelCollider rbwc;
     public Transform lfw;
     public Transform rfw;
     public Transform lbw;
@@ -100,6 +104,10 @@ public class DrivebaseController : MonoBehaviour
 
         ApplyLocalPositionToVisuals(leftWheel);
         ApplyLocalPositionToVisuals(rightWheel);
+        ApplyLocalPositionToVisuals(lfwc);
+        ApplyLocalPositionToVisuals(rfwc);
+        ApplyLocalPositionToVisuals(lbwc);
+        ApplyLocalPositionToVisuals(rbwc);
 
 
         // Encoder simulation
