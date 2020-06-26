@@ -35,4 +35,9 @@ public class ZMQClient : MonoBehaviour
         zmqThread.killProcess = true;
         zmqThread.Stop();
     }
+
+    public bool isComms()
+    {
+        return !(zmqThread is null) && !(zmqThread.robotPacket is null) && zmqThread.connectionStatus;
+    }
 }

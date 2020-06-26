@@ -22,7 +22,6 @@ public class MenuFile : MenuItem
     private FileAction fileAction = FileAction.NONE;
     private string url = "";
     private string sceneToOpen = "";
-    private List<MenuItem> folder;
 
     public MenuFile()
     {
@@ -60,6 +59,28 @@ public class MenuFile : MenuItem
     }
 
     public override void activate(MenuController menuController)
+    {
+        switch (fileAction)
+        {
+            case (FileAction.SCENE):
+                {
+                    SceneManager.LoadScene(sceneToOpen, LoadSceneMode.Single);
+                    break;
+                }
+            case (FileAction.URL):
+                {
+                    Application.OpenURL(url);
+                    break;
+                }
+            case (FileAction.QUIT):
+                {
+                    Application.Quit();
+                    break;
+                }
+        }
+    }
+
+    public void activate(LevelMenu menuController)
     {
         switch (fileAction)
         {
@@ -133,6 +154,11 @@ public class MenuFile : MenuItem
     public override bool isFolder()
     {
         return false;
+    }
+
+    public void setTitle(string title)
+    {
+        this.title = title;
     }
 
     public override string getTitle()

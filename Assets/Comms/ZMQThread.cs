@@ -73,7 +73,7 @@ public class ZMQThread : RunAbleThread
 
                     if (gotMessage)
                     {
-                        Debug.Log("Received " + message);
+                        //Debug.Log("Received " + message);
                         decodeMessage(message);
                     }
 

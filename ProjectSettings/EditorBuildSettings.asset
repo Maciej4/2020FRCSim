@@ -11,4 +11,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/FRC2020.unity
     guid: 4f251db550ce2574da69641cffc83652
+  - enabled: 1
+    path: Assets/Scenes/level1.unity
+    guid: 4d4441cffba742c4cad28ae874625b84
   m_configObjects: {}

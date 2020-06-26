@@ -5,26 +5,38 @@ using UnityEngine;
 public class CameraController : MonoBehaviour
 {
     public Transform robot;
+    public Transform arenaCenter;
     public Vector3 robotRelRot = new Vector3(10, 0, 0);
 
     public Vector3[] positions = new Vector3[] {
         new Vector3(0, 0.275f, -0.5f),
         new Vector3(0, 1f, -2f),
-        new Vector3(0, 2f, 0),
+        //new Vector3(0, 2f, 0),
         new Vector3(-3.432f, 1.5f, 8.5f),
+        Vector3.zero
     };
 
     public Vector3 cameraPos = new Vector3(0, 1f, -2f);
+
     public float followDistance = 1.1f;
     public float followDistanceX = 0f;
     public float xAngle = 0f;
     public float yAngle = 0.6f;
+    public Vector2 startRots = Vector2.zero;
+
+    public float followDistanceA = 10.4f;
+    public float followDistanceXA = 0f;
+    public float xAngleA = -2.584484f;
+    public float yAngleA = 0.3417884f;
+    public Vector2 startRotsA = Vector2.zero;
+
     public Vector3 mouseStartPos = Vector3.zero;
     public Vector2 mouseDelta = Vector2.zero;
-    public Vector2 startRots = Vector2.zero;
     public float smoothTime = 0.25f;
     private Vector3 velocity = Vector3.zero;
     //private Vector3 rotVel = Vector3.zero;
+
+    public bool orbitMode = true;
 
     public int currentPos = 0;
 
@@ -53,21 +65,6 @@ public class CameraController : MonoBehaviour
             case 0:
                 {
                     this.transform.parent = robot;
-                    /*if (Vector3.Distance(this.transform.localPosition, positions[0]) < 0.05f)
-                    {
-                        this.transform.localPosition = positions[0];
-                        this.transform.localRotation = Quaternion.Euler(robotRelRot);
-                    }
-                    else if (Vector3.Distance(this.transform.localPosition, positions[0]) < 0.1f)
-                    {
-                        this.transform.localPosition = Vector3.SmoothDamp(this.transform.localPosition, positions[0], ref velocity, 0.5f);
-                        this.transform.localRotation = Quaternion.Euler(Vector3.SmoothDamp(this.transform.localRotation.eulerAngles, robotRelRot, ref rotVel, 0.1f));
-                    }
-                    else
-                    {
-                        this.transform.localPosition = Vector3.SmoothDamp(this.transform.localPosition, positions[0], ref velocity, 0.5f);
-                        this.transform.LookAt(robot);
-                    }*/
                     this.transform.localPosition = positions[0];
                     this.transform.localRotation = Quaternion.Euler(robotRelRot);
                     break;
@@ -106,6 +103,47 @@ public class CameraController : MonoBehaviour
                     this.transform.LookAt(robot);
                     break;
                 }
+            case 3:
+                {
+                    if (Input.GetMouseButtonDown(0))
+                    {
+                        orbitMode = false;
+                        mouseStartPos = Input.mousePosition;
+                    }
+
+                    if (Input.GetMouseButton(0))
+                    {
+                        mouseDelta = mouseStartPos - Input.mousePosition;
+                        mouseDelta *= 0.002f;
+                        xAngleA = startRotsA.x + mouseDelta.x;
+                        yAngleA = startRotsA.y + mouseDelta.y;
+                        yAngleA = Mathf.Clamp(yAngleA, 0.1f, Mathf.PI / 2 - 0.01f);
+                    }
+
+                    if (Input.GetMouseButtonUp(0))
+                    {
+                        startRotsA += mouseDelta;
+                        startRotsA.y = Mathf.Clamp(startRotsA.y, 0.1f, Mathf.PI / 2 - 0.01f);
+                    }
+
+                    if (orbitMode)
+                    {
+                        xAngleA += 0.005f;
+                        startRotsA.x = xAngleA;
+                    }
+
+                    followDistanceA += Input.mouseScrollDelta.y * 0.4f;
+                    followDistanceA = Mathf.Clamp(followDistanceA, 4f, 15f);
+
+                    this.transform.parent = null;
+                    followDistanceXA = followDistanceA * Mathf.Cos(yAngleA);
+                    cameraPos.x = followDistanceXA * Mathf.Sin(xAngleA);
+                    cameraPos.y = followDistanceA * Mathf.Sin(yAngleA);
+                    cameraPos.z = -followDistanceXA * Mathf.Cos(xAngleA);
+                    this.transform.localPosition = Vector3.SmoothDamp(this.transform.localPosition, cameraPos, ref velocity, smoothTime);
+                    this.transform.LookAt(arenaCenter);
+                    break;
+                }
             default: 
                 {
                     this.transform.parent = null;
@@ -118,6 +156,8 @@ public class CameraController : MonoBehaviour
 
     public void increasePosition()
     {
+        orbitMode = false;
+
         if (currentPos >= positions.Length - 1)
         {
             currentPos = 0;
@@ -129,7 +169,9 @@ public class CameraController : MonoBehaviour
     }
 
     public void decreasePosition()
-    { 
+    {
+        orbitMode = false;
+
         if (currentPos <= 0)
         {
             currentPos = positions.Length - 1;

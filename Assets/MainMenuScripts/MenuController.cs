@@ -21,7 +21,7 @@ public class MenuController : MonoBehaviour
         new MenuFolder("TRAINING",
             new List<MenuItem>() {
             new MenuFolder(),
-            new MenuFile("github.url", MenuFile.FileAction.URL).setUrl("https://github.com/Maciej4/2020FRCSim"),
+            new MenuFile("level1.exe", MenuFile.FileAction.SCENE).setScene("level1"),
             new MenuFile(),
             new MenuFile(),
             new MenuFile(),

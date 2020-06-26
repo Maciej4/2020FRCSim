@@ -33,6 +33,7 @@ public class DrivebaseController : MonoBehaviour
     private float ldx = 0f;
     private float rdx = 0f;
     private bool alterantor = false;
+    public bool simpleDriveEnabled = true;
 
     public void Start()
     {
@@ -61,10 +62,10 @@ public class DrivebaseController : MonoBehaviour
 
     public void FixedUpdate()
     {
-        if (!(zmqClient.zmqThread is null) && !(zmqClient.zmqThread.robotPacket is null) && zmqClient.zmqThread.connectionStatus)
+        if (zmqClient.isComms())
         {
-            float leftPower = (float)(zmqClient.zmqThread.robotPacket.leftDriveMotor1Power + zmqClient.zmqThread.robotPacket.leftDriveMotor2Power) / 2.0f;
-            float rightPower = (float)(zmqClient.zmqThread.robotPacket.rightDriveMotor1Power + zmqClient.zmqThread.robotPacket.rightDriveMotor2Power) / 2.0f;
+            float leftPower = (float)(zmqClient.zmqThread.robotPacket.motorPowers[0] + zmqClient.zmqThread.robotPacket.motorPowers[1]) / 2.0f;
+            float rightPower = (float)(zmqClient.zmqThread.robotPacket.motorPowers[2] + zmqClient.zmqThread.robotPacket.motorPowers[3]) / 2.0f;
 
             leftPower = Mathf.Clamp((float)leftPower, -1.0f, 1.0f);
             rightPower = Mathf.Clamp((float)rightPower, -1.0f, 1.0f);
@@ -74,18 +75,25 @@ public class DrivebaseController : MonoBehaviour
 
             zmqClient.zmqThread.unityPacket.navXHeading = this.transform.rotation.eulerAngles.y - 180f;
 
-            zmqClient.unityPacket.leftDriveEncoderInterfacePosition = 10.0 * lx;
-            zmqClient.unityPacket.leftDriveMotor1Position = lx;
-            zmqClient.unityPacket.leftDriveMotor2Position = lx;
+            zmqClient.unityPacket.motorPositions[12] = 10.0 * lx;
+            zmqClient.unityPacket.motorPositions[0] = lx;
+            zmqClient.unityPacket.motorPositions[1] = lx;
 
-            zmqClient.unityPacket.rightDriveEncoderInterfacePosition = 10.0 * rx;
-            zmqClient.unityPacket.rightDriveMotor1Position = rx;
-            zmqClient.unityPacket.rightDriveMotor2Position = rx;
+            zmqClient.unityPacket.motorPositions[13] = 10.0 * rx;
+            zmqClient.unityPacket.motorPositions[2] = rx;
+            zmqClient.unityPacket.motorPositions[3] = rx;
+
+            //Debug.Log("Motor powers: " + zmqClient.zmqThread.robotPacket.motorPowers);
         }
-        else
+        else if (simpleDriveEnabled)
         {
             linearPower = maxMotorTorque * Input.GetAxis("Vertical");
             turnPower = maxSteeringPower * Input.GetAxis("Horizontal");
+        }
+        else
+        {
+            linearPower = 0;
+            turnPower = 0;
         }
 
         if (alterantor)
