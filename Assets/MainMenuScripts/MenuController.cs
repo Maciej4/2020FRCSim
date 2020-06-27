@@ -21,8 +21,15 @@ public class MenuController : MonoBehaviour
         new MenuFolder("TRAINING",
             new List<MenuItem>() {
             new MenuFolder(),
-            new MenuFile("level1.exe", MenuFile.FileAction.SCENE).setScene("level1"),
-            new MenuFile(),
+            new MenuFile("level1.exe", MenuFile.FileAction.SCENE).setScene("level1")
+                .setDescription("Some important controls:\n" +
+                "- W and S mock joystick axis 0\n" +
+                "- A and D mock joystick axis 1\n" +
+                "- Buttons are not yet implemented\n" +
+                "- Press P to change perspective\n" +
+                "  + Some perspectives allow for you to move your camera with the LEFT MOUSE BUTTON\n" +
+                "- You MUST make an edit to your robot code or else it will not connect to the simulator"),
+            new MenuFile("level2.exe", MenuFile.FileAction.SCENE).setScene("level2"),
             new MenuFile(),
             new MenuFile(),
             new MenuFile(),
@@ -71,7 +78,7 @@ public class MenuController : MonoBehaviour
             new MenuFolder("CONTROLS",
                 new List<MenuItem>() {
                 new MenuFolder(),
-                new MenuFile("github.url", MenuFile.FileAction.URL).setUrl("https://github.com/Maciej4/2020FRCSim"),
+                new MenuFile("temp.url", MenuFile.FileAction.URL).setUrl("https://www.youtube.com/watch?v=dQw4w9WgXcQ"),
                 new MenuFile(),
                 new MenuFile(),
                 new MenuFile(),
@@ -90,7 +97,7 @@ public class MenuController : MonoBehaviour
             new MenuFolder("GRAPHICS",
                 new List<MenuItem>() {
                 new MenuFolder(),
-                new MenuFile("github.url", MenuFile.FileAction.URL).setUrl("https://github.com/Maciej4/2020FRCSim"),
+                new MenuFile("temp.url", MenuFile.FileAction.URL).setUrl("https://www.youtube.com/watch?v=dQw4w9WgXcQ"),
                 new MenuFile(),
                 new MenuFile(),
                 new MenuFile(),
@@ -109,7 +116,7 @@ public class MenuController : MonoBehaviour
             new MenuFolder("AUDIO",
                 new List<MenuItem>() {
                 new MenuFolder(),
-                new MenuFile("github.url", MenuFile.FileAction.URL).setUrl("https://github.com/Maciej4/2020FRCSim"),
+                new MenuFile("temp.url", MenuFile.FileAction.URL).setUrl("https://www.youtube.com/watch?v=dQw4w9WgXcQ"),
                 new MenuFile(),
                 new MenuFile(),
                 new MenuFile(),
@@ -128,7 +135,7 @@ public class MenuController : MonoBehaviour
             new MenuFolder("GAMEPLAY",
                 new List<MenuItem>() {
                 new MenuFolder(),
-                new MenuFile("github.url", MenuFile.FileAction.URL).setUrl("https://github.com/Maciej4/2020FRCSim"),
+                new MenuFile("temp.url", MenuFile.FileAction.URL).setUrl("https://www.youtube.com/watch?v=dQw4w9WgXcQ"),
                 new MenuFile(),
                 new MenuFile(),
                 new MenuFile(),
@@ -296,7 +303,5 @@ public class MenuController : MonoBehaviour
         }
 
         return outputString + menuItem.getTitle() + "</mspace>";
-
-        return "";
     }
 }

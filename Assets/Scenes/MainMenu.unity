@@ -3128,8 +3128,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 818, y: -907}
-  m_SizeDelta: {x: 1183, y: 122}
+  m_AnchoredPosition: {x: 660.73, y: -907}
+  m_SizeDelta: {x: 1497.4512, y: 122}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &994932893
 MonoBehaviour:
@@ -4037,7 +4037,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 1023, y: -947.1}
+  m_AnchoredPosition: {x: 710, y: -947.1}
   m_SizeDelta: {x: 1700, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1469328649
@@ -4060,7 +4060,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "<mspace=68>\u25002020FRCSim\u2500v0.0.1\u2500</mspace>"
+  m_text: "<mspace=68>\u2500\u2500\u2500\u2500\u25002020FRCSim\u2500v0.1.1\u2500</mspace>"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 0660308a9943df64fb1823d6fb2f4afc, type: 2}
   m_sharedMaterial: {fileID: -3788278918521154948, guid: 0660308a9943df64fb1823d6fb2f4afc,
@@ -4095,7 +4095,7 @@ MonoBehaviour:
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 1
+  m_HorizontalAlignment: 4
   m_VerticalAlignment: 256
   m_textAlignment: 65535
   m_characterSpacing: 0
@@ -4124,7 +4124,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 1
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 249.61185, w: 103.65734}
+  m_margin: {x: -300.99713, y: 0, z: 121.3631, w: 103.65734}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0

@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class DriverStation : MonoBehaviour
@@ -20,6 +21,7 @@ public class DriverStation : MonoBehaviour
     public Text elapsedTime;
     public FloatingText instructions;
     public DrivebaseController drivebase;
+    public PosGoalController goal;
 
     private Color red = new Color(255, 0, 0);
     private Color green = new Color(0, 255, 0);
@@ -37,7 +39,11 @@ public class DriverStation : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        softReset();
+        robotRigidbody.velocity = Vector3.zero;
+        robotRigidbody.angularVelocity = Vector3.zero;
+        robotRigidbody.isKinematic = true;
+        robotTransform.position = new Vector3(0.0f, 0.35f, 5.0f);
+        robotTransform.rotation = Quaternion.Euler(new Vector3(0f, 180f, 0f));
         offsetTime = Time.time;
     }
 
@@ -87,6 +93,7 @@ public class DriverStation : MonoBehaviour
             if (pastRobotState)
             {
                 softReset();
+                //SceneManager.LoadScene(SceneManager.GetActiveScene().name, LoadSceneMode.Single);
             }
             enableArea.color = red;
             enableText.text = "Enable";
@@ -122,21 +129,23 @@ public class DriverStation : MonoBehaviour
         elapsedTime.text = "Elapsed Time " + timeNow.ToString("000.0");
     }
 
-    private void softReset()
-    {
-        robotRigidbody.velocity = Vector3.zero;
-        robotRigidbody.angularVelocity = Vector3.zero;
-        robotRigidbody.isKinematic = true;
-        robotTransform.position = new Vector3(0.0f, 0.35f, 5.0f);
-        robotTransform.rotation = Quaternion.Euler(new Vector3(0f, 180f, 0f));
-    }
-
     public void toggleState() 
     {
         if (!Input.GetKey(KeyCode.Space) && (zmqClient.isComms() || drivebase.simpleDriveEnabled))
         {
             robotState = !robotState;
         }
+    }
+
+    public void softReset()
+    {
+        robotRigidbody.velocity = Vector3.zero;
+        robotRigidbody.angularVelocity = Vector3.zero;
+        robotRigidbody.isKinematic = true;
+        robotTransform.position = new Vector3(0.0f, 0.35f, 5.0f);
+        robotTransform.rotation = Quaternion.Euler(new Vector3(0f, 180f, 0f));
+        offsetTime = Time.time;
+        goal.resetGoal();
     }
 
     public void modeChanged() 

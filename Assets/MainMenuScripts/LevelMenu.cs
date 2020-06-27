@@ -72,6 +72,11 @@ public class LevelMenu : MonoBehaviour
             }
             else
             {
+                /**if (!menuList[cursorPos].getSceneToLoad().Equals(SceneManager.GetActiveScene().name))
+                {
+                    Destroy(GameObject.FindGameObjectsWithTag("test")[0]);
+                }*/
+
                 menuList[cursorPos].activate(this);
             }
         }
@@ -130,6 +135,10 @@ public class LevelMenu : MonoBehaviour
     {
         if (isHidden)
         {
+            /**if (1 < GameObject.FindGameObjectsWithTag("test").Length)
+            {
+                Destroy(GameObject.FindGameObjectsWithTag("test")[0]);
+            }*/
             SceneManager.LoadScene(nextLevelName, LoadSceneMode.Single);
         }
     }

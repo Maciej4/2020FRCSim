@@ -9,10 +9,12 @@ public class PosGoalController : MonoBehaviour
     public Text goodJobText;
     public DriverStation driverStation;
     public LevelMenu levelMenu;
+    public GameObject prefabGoal;
     private bool isRobotEnabled = false;
     private bool pastIsRobotEnabled = false;
     private float offsetTime = 0.0f;
     private bool isComplete = false;
+    private bool pastIsComplete = false;
     private Vector3 velocity = Vector3.zero;
     private float smoothTime = 0.50f;
     private bool finalEdit = false;
@@ -24,7 +26,7 @@ public class PosGoalController : MonoBehaviour
         {
             isComplete = true;
             completionTimeString = (Time.time - offsetTime).ToString("000.00");
-            goodJobText.text = "Level complete!\nYou took: " + completionTimeString + " seconds";
+            goodJobText.text = "Press enter to go to next level!\nYou took: " + completionTimeString + " seconds";
             this.GetComponent<MeshRenderer>().enabled = false;
             this.GetComponent<BoxCollider>().enabled = false;
         }
@@ -34,17 +36,17 @@ public class PosGoalController : MonoBehaviour
     {
         if (isComplete)
         {
+            pastIsComplete = true;
+        }
+
+        if (pastIsComplete)
+        {
             if (Input.GetKeyDown(KeyCode.Return))
             {
                 levelMenu.loadNextLevel();
             }
 
             goodJobTextTransform.localPosition = Vector3.SmoothDamp(goodJobTextTransform.localPosition, new Vector3(0f, 900f, 0f), ref velocity, smoothTime);
-            if (800 < goodJobTextTransform.localPosition.y && !finalEdit)
-            {
-                finalEdit = true;
-                goodJobText.text = "Press enter to go to next level!\nYou took: " + completionTimeString + " seconds";
-            }
         }
 
         isRobotEnabled = driverStation.robotState;
@@ -55,5 +57,24 @@ public class PosGoalController : MonoBehaviour
         }
 
         pastIsRobotEnabled = isRobotEnabled;
+    }
+
+    public void resetGoal()
+    {
+        isComplete = false;
+        //goodJobTextTransform.localPosition = Vector3.zero;
+        finalEdit = false;
+        //goodJobText.text = "";
+        this.GetComponent<MeshRenderer>().enabled = true;
+        this.GetComponent<BoxCollider>().enabled = true;
+        GameObject[] objs = GameObject.FindGameObjectsWithTag("goal");
+
+        Debug.Log("Gamer " + objs.Length);
+
+        if (1 <= objs.Length)
+        {
+            Destroy(objs[0]);
+            Instantiate(prefabGoal);
+        }
     }
 }

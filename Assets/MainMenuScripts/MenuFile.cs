@@ -58,6 +58,11 @@ public class MenuFile : MenuItem
         return fileAction;
     }
 
+    public string getSceneToLoad()
+    {
+        return sceneToOpen;
+    }
+
     public override void activate(MenuController menuController)
     {
         switch (fileAction)
