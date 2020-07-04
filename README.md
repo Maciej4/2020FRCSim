@@ -1,5 +1,6 @@
 # 2020FRCSim
-A simulator of the 2020 FRC game! Press [this link](https://github.com/) for instructions on how to use Simulator with Java.
+
+A simulator of the 2020 FRC game! Press [this link](https://github.com/Maciej4/2020FRCSim/blob/master/docs/StarterGuide.md) for instructions on how to use Simulator with Java.
 
 ##### *Important: Built in latest Unity Alpha 2020.2.0a13*
 
