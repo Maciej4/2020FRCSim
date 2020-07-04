@@ -1,5 +1,5 @@
 # 2020FRCSim
-A simulator of the 2020 FRC game!
+A simulator of the 2020 FRC game! Press [this link](https://github.com/) for instructions on how to use Simulator with Java.
 
 ##### *Important: Built in latest Unity Alpha 2020.2.0a13*
 
@@ -27,3 +27,8 @@ This works by:
 4. The Java code then deserializes the data from Json and uses the joystick data to calculate the tank drive values.
 5. Next the left and right power for the virtual motors is serialized and sent through ZMQ back to the Unity side.
 6. Using basic kinematics, the robot's approximate motion is calculated and visualized given the motor powers.
+
+## Prerequisites
+
+- Github Desktop
+- FRC Visual Studio Code
