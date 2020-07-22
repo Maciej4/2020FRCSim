@@ -21,7 +21,7 @@ public class PosGoalController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.name.Equals("Robot")) 
+        if (other.tag.Equals("robot"))
         {
             isComplete = true;
             completionTimeString = (Time.time - offsetTime).ToString("000.00");
@@ -69,8 +69,11 @@ public class PosGoalController : MonoBehaviour
 
         if (1 <= objs.Length)
         {
-            Destroy(objs[0]);
-            Instantiate(prefabGoal);
+            if (!prefabGoal.name.Equals("blankgoal"))
+            {
+                Destroy(objs[0]);
+                Instantiate(prefabGoal);
+            }
         }
     }
 }

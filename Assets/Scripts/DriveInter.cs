@@ -41,7 +41,5 @@ public class DriveInter : MonoBehaviour
         {
             drivebaseController.TankDrive(0f, 0f);
         }
-
-        drivebaseController.simpleDriveEnabled = this.simpleDriveEnabled;
     }
 }

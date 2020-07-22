@@ -97,7 +97,8 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
-  m_LightingDataAsset: {fileID: 0}
+  m_LightingDataAsset: {fileID: 112000000, guid: cd9d7a68e9e18c045af97ab785ba4e1d,
+    type: 2}
   m_LightingSettings: {fileID: 623512937}
 --- !u!196 &4
 NavMeshSettings:
@@ -870,7 +871,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!65 &172679281
 BoxCollider:
@@ -1258,7 +1259,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &247996783
 Transform:
@@ -1935,7 +1936,7 @@ GameObject:
   - component: {fileID: 587186703}
   m_Layer: 0
   m_Name: SimpleRobot
-  m_TagString: Untagged
+  m_TagString: robot
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1968,7 +1969,6 @@ MonoBehaviour:
   maxSteeringPower: 100
   lx: 0
   rx: 0
-  simpleDriveEnabled: 0
 --- !u!54 &587186704
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -2312,7 +2312,7 @@ LightingSettings:
   m_PrefabAsset: {fileID: 0}
   m_Name: Settings.lighting
   serializedVersion: 2
-  m_GIWorkflowMode: 0
+  m_GIWorkflowMode: 1
   m_EnableBakedLightmaps: 1
   m_EnableRealtimeLightmaps: 0
   m_RealtimeEnvironmentLighting: 1
@@ -2623,7 +2623,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!108 &705507994
 Light:
@@ -3379,6 +3379,7 @@ GameObject:
   - component: {fileID: 842227897}
   - component: {fileID: 842227896}
   - component: {fileID: 842227898}
+  - component: {fileID: 842227899}
   m_Layer: 0
   m_Name: Antenna
   m_TagString: Untagged
@@ -3442,6 +3443,21 @@ MonoBehaviour:
   zmqClient: {fileID: 842227897}
   drivebaseController: {fileID: 587186703}
   simpleDriveEnabled: 1
+--- !u!114 &842227899
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 842227894}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45149e9d353f92a4fbaaf675d386b594, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  zmqClient: {fileID: 842227897}
+  subsystems:
+  - {fileID: 587186703}
 --- !u!1 &848025698
 GameObject:
   m_ObjectHideFlags: 0
@@ -5123,7 +5139,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &1348331489
 Transform:
@@ -5468,7 +5484,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &1450806849
 Transform:
@@ -5808,7 +5824,8 @@ MonoBehaviour:
   goodJobText: {fileID: 1569792772}
   driverStation: {fileID: 1315148687}
   levelMenu: {fileID: 2077639813}
-  prefabGoal: {fileID: 0}
+  prefabGoal: {fileID: 5527015019544608238, guid: 6e138c8de8f71404b9df1959305af5f8,
+    type: 3}
 --- !u!1 &1535789816
 GameObject:
   m_ObjectHideFlags: 0
@@ -6027,7 +6044,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &1568394951
 Transform:
@@ -6790,7 +6807,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &1655555877
 Transform:
@@ -6823,7 +6840,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &1671544267
 Transform:
@@ -6944,6 +6961,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1726830844}
   - component: {fileID: 1726830843}
+  - component: {fileID: 1726830845}
   m_Layer: 0
   m_Name: Instructions
   m_TagString: Untagged
@@ -6981,6 +6999,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1726830845
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1726830842}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 23a863e7c3446ce46ae02d4172e117ce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1739892110
 GameObject:
   m_ObjectHideFlags: 0
@@ -8157,7 +8187,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!108 &2011170346
 Light:
@@ -8633,7 +8663,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &2078329885
 Transform:
@@ -8929,7 +8959,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!108 &2090012479
 Light:

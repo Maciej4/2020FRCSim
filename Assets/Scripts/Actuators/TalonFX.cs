@@ -1,31 +1,45 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TalonFX : Motor
+public class TalonFX : Hardware, Motor
 {
-    private Func<float, bool> setPowFunc;
-    private Func<float> getPosFunc;
-
-    public TalonFX(Func<float, bool> setPowFunc, Func<float> getPosFunc)
+    public TalonFX(int canID)
     {
-        this.setPowFunc = setPowFunc;
-        this.getPosFunc = getPosFunc;
+        type = "TalonFX";
+        booleans = new bool[0];
+        integers = new int[] { canID };
+        doubles = new double[] { 0.0, 0.0 };
+        strings = new string[0];
     }
 
-    public void SetPower(float power)
+    public override string GetHardwareType()
     {
-        setPowFunc(power);
+        return type;
     }
 
-    public float GetPosition()
+    public double GetEncoderPos()
     {
-        return getPosFunc();
+        return doubles[1];
     }
 
-    public new string GetType()
+    public int GetMotorID()
     {
-        return "TalonFX";
+        return integers[0];
+    }
+
+    public double GetPower()
+    {
+        return doubles[0];
+    }
+
+    public void SetEncoderPos(double encoderPosition)
+    {
+        doubles[1] = encoderPosition;
+    }
+
+    public void SetPower(double motorPower)
+    {
+        doubles[0] = motorPower;
     }
 }

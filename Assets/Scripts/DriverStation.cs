@@ -66,7 +66,7 @@ public class DriverStation : MonoBehaviour
             joyStatusImage.color = green;
         }
 
-        if (Input.GetKeyDown(KeyCode.Space) && (zmqClient.isComms() || drivebase.simpleDriveEnabled))
+        if (Input.GetKeyDown(KeyCode.Space) && (zmqClient.isComms()))// || drivebase.simpleDriveEnabled))
         {
             robotState = !robotState;
         }
@@ -135,7 +135,10 @@ public class DriverStation : MonoBehaviour
         offsetTime = Time.time;
         foreach (GameObject goal in GameObject.FindGameObjectsWithTag("goal"))
         {
+            //if (!(goal.GetComponent<PosGoalController>() is null))
+            //{
             goal.GetComponent<PosGoalController>().resetGoal();
+            //}
         }
     }
 

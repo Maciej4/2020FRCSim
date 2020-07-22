@@ -33,10 +33,12 @@ public class DrivebaseController : MonoBehaviour, Subsystem
     private float ldx = 0f;
     private float rdx = 0f;
     private bool alterantor = false;
-    public bool simpleDriveEnabled = true;
 
-    private List<Motor> motors = new List<Motor> {
-        new TalonFX(lm1Pow, getLeftPos)
+    private List<Hardware> hardware = new List<Hardware> {
+        new TalonFX(1),
+        new TalonFX(2),
+        new TalonFX(3),
+        new TalonFX(4)
     };
 
     public void Start()
@@ -107,6 +109,11 @@ public class DrivebaseController : MonoBehaviour, Subsystem
 
     public void FixedUpdate()
     {
+        float leftPower = (float)(((Motor)hardware[0]).GetPower() + ((Motor)hardware[1]).GetPower()) / 2.0f;
+        float rightPower = (float)(((Motor)hardware[2]).GetPower() + ((Motor)hardware[3]).GetPower()) / 2.0f;
+
+        TankDrive(leftPower, rightPower);
+
         // Encoder simulation
         // TODO: Only measure forward / backward movement.
         ldx = Vector3.Distance(leftWheel.transform.position, pastLeftPos);
@@ -134,20 +141,15 @@ public class DrivebaseController : MonoBehaviour, Subsystem
         pastRightPos = rightWheel.transform.position;
 
         alterantor = !alterantor;
+
+        ((Motor)hardware[0]).SetEncoderPos(lx);
+        ((Motor)hardware[1]).SetEncoderPos(lx);
+        ((Motor)hardware[2]).SetEncoderPos(rx);
+        ((Motor)hardware[3]).SetEncoderPos(rx);
     }
 
-    public static bool lm1Pow(float power)
+    public List<Hardware> GetHardware()
     {
-        return true;
-    }
-
-    public static float getLeftPos()
-    {
-        return 0.0f;
-    }
-
-    public float getRightPos()
-    {
-        return (float)lx;
+        return hardware;
     }
 }

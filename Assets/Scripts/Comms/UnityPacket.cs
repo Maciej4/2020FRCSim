@@ -1,4 +1,6 @@
-﻿public class UnityPacket
+﻿using System.Collections.Generic;
+
+public class UnityPacket
 {
     //public double driveX = 0.0;
     //public double driveY = 0.0;
@@ -29,4 +31,6 @@
     public double[] joyAxisArray = new double[] { 0.0, 0.0, 0.0, 0.0 };
     public int joyPOV = 0;
     public double navXHeading = 0.0;
+    public List<Hardware> hardware = new List<Hardware>();
+    public List<string> hardwareString = new List<string>();
 }

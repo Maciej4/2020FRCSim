@@ -17,6 +17,13 @@ public class ZMQThread : RunAbleThread
     
     public string jsonify()
     {
+        unityPacket.hardwareString.Clear();
+
+        foreach (Hardware hardware in unityPacket.hardware)
+        {
+            unityPacket.hardwareString.Add(JsonUtility.ToJson(hardware));
+        }
+
         return JsonUtility.ToJson(unityPacket);
     }
 
@@ -73,7 +80,7 @@ public class ZMQThread : RunAbleThread
 
                     if (gotMessage)
                     {
-                        //Debug.Log("Received " + message);
+                        Debug.Log("Received " + message);
                         decodeMessage(message);
                     }
 

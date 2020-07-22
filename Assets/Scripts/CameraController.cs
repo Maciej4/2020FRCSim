@@ -127,7 +127,7 @@ public class CameraController : MonoBehaviour
 
                     if (orbitMode)
                     {
-                        xAngleA += 0.005f;
+                        xAngleA += 0.3f * Time.deltaTime;
                         startRotsA.x = xAngleA;
                     }
 

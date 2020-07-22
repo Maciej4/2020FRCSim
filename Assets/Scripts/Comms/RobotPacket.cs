@@ -24,4 +24,5 @@ public class RobotPacket
     public double shooterPower1 = 0.0;
     public double shooterPower2 = 0.0;*/
     public int intakeFlipSolenoidState = 0;
+    public List<Hardware> hardware = new List<Hardware>();
 }
