@@ -34,6 +34,8 @@ public class DriverStation : MonoBehaviour
     public bool modeChangingEnabled = true;
     public bool modeChangingLock = false;
 
+    private bool pastZMQIsComms = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -69,6 +71,11 @@ public class DriverStation : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space) && (zmqClient.isComms()))// || drivebase.simpleDriveEnabled))
         {
             robotState = !robotState;
+        }
+
+        if (pastZMQIsComms != zmqClient.isComms())
+        {
+            robotState = false;
         }
 
         if (robotState)
@@ -119,6 +126,7 @@ public class DriverStation : MonoBehaviour
         }
 
         pastRobotState = robotState;
+        pastZMQIsComms = zmqClient.isComms();
         
         timeNow = Time.time - offsetTime;
 

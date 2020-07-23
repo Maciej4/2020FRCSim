@@ -29,7 +29,64 @@ public class ZMQThread : RunAbleThread
 
     public void decodeMessage(string jsonMessage)
     {
-        this.robotPacket = (RobotPacket)JsonUtility.FromJson(jsonMessage, typeof(RobotPacket));
+        robotPacket = (RobotPacket)JsonUtility.FromJson(jsonMessage, typeof(RobotPacket));
+
+        if (robotPacket.hardware.Count == robotPacket.hardwareString.Count)
+        {
+            for (int i = 0; i < robotPacket.hardwareString.Count; i++)
+            {
+                string hardwareJson = robotPacket.hardwareString[i];
+                TempHardwareBox tempHardwareBox = (TempHardwareBox)JsonUtility.FromJson(hardwareJson, typeof(TempHardwareBox));
+                robotPacket.hardware[i].CopyValues(tempHardwareBox);
+            }
+        }
+        else
+        {
+            robotPacket.hardware.Clear();
+
+            for (int i = 0; i < robotPacket.hardwareString.Count; i++)
+            {
+                robotPacket.hardware.Add(decodeHardware(robotPacket.hardwareString[i]));
+            }
+        }
+    }
+
+    public Hardware decodeHardware(string hardwareJson)
+    {
+        TempHardwareBox tempHardwareBox = (TempHardwareBox)JsonUtility.FromJson(hardwareJson, typeof(TempHardwareBox));
+
+        switch (tempHardwareBox.type) 
+        {
+            case ("CANSparkMax"): {
+                CANSparkMax tempHardware = new CANSparkMax(0);
+                tempHardware.CopyValues(tempHardwareBox);
+                return tempHardware;
+            }
+            case ("TalonFX"): {
+                TalonFX tempHardware = new TalonFX(0);
+                tempHardware.CopyValues(tempHardwareBox);
+                return tempHardware;
+            }
+            case ("TalonSRX"): {
+                TalonSRX tempHardware = new TalonSRX(0);
+                tempHardware.CopyValues(tempHardwareBox);
+                return tempHardware;
+            }
+            case ("Joystick"): {
+                Joystick tempHardware = new Joystick(0);
+                tempHardware.CopyValues(tempHardwareBox);
+                return tempHardware;
+            }
+            case ("AHRS"):
+            {
+                AHRS tempHardware = new AHRS();
+                tempHardware.CopyValues(tempHardwareBox);
+                return tempHardware;
+            }
+            default: {
+                return null;
+            }
+        }
     }
     
     protected override void Run()
@@ -80,7 +137,7 @@ public class ZMQThread : RunAbleThread
 
                     if (gotMessage)
                     {
-                        Debug.Log("Received " + message);
+                        //Debug.Log("Received " + message);
                         decodeMessage(message);
                     }
 

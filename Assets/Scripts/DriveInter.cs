@@ -8,25 +8,39 @@ public class DriveInter : MonoBehaviour
     public DrivebaseController drivebaseController;
 
     public bool simpleDriveEnabled = true;
+    private bool motorsCached = false;
+
+    private List<Motor> motors = new List<Motor>();
 
     void FixedUpdate()
     {
         if (zmqClient.isComms())
         {
-            float leftPower = (float)(zmqClient.zmqThread.robotPacket.motorPowers[0] + zmqClient.zmqThread.robotPacket.motorPowers[1]) / 2.0f;
-            float rightPower = (float)(zmqClient.zmqThread.robotPacket.motorPowers[2] + zmqClient.zmqThread.robotPacket.motorPowers[3]) / 2.0f;
+            if (!motorsCached)
+            {
+                motors.Clear();
+                List<Hardware> hardware = zmqClient.zmqThread.unityPacket.hardware;
+                for (int i = 0; i < 4; i++)
+                {
+                    motors.Add((Motor)hardware[i]);
+                }
+                motorsCached = true;
+            }
+
+            //Debug.Log("0: " + motors[0].GetPower() + ", 1: " + motors[1].GetPower() + ", 2: " + motors[2].GetPower() + ", 3: " + motors[3].GetPower());
+
+            float leftPower = (float)(motors[0].GetPower() + motors[1].GetPower()) / 2.0f;
+            float rightPower = (float)(motors[2].GetPower() + motors[3].GetPower()) / 2.0f;
+
+            //Debug.Log("l: " + leftPower + ", r: " + rightPower);
 
             drivebaseController.TankDrive(leftPower, rightPower);
 
-            zmqClient.zmqThread.unityPacket.navXHeading = this.transform.rotation.eulerAngles.y - 180f;
+            motors[0].SetEncoderPos(drivebaseController.lx);
+            motors[1].SetEncoderPos(drivebaseController.lx);
 
-            zmqClient.unityPacket.motorPositions[12] = 10.0 * drivebaseController.lx;
-            zmqClient.unityPacket.motorPositions[0] = drivebaseController.lx;
-            zmqClient.unityPacket.motorPositions[1] = drivebaseController.lx;
-
-            zmqClient.unityPacket.motorPositions[13] = 10.0 * drivebaseController.rx;
-            zmqClient.unityPacket.motorPositions[2] = drivebaseController.rx;
-            zmqClient.unityPacket.motorPositions[3] = drivebaseController.rx;
+            motors[2].SetEncoderPos(drivebaseController.rx);
+            motors[3].SetEncoderPos(drivebaseController.rx);
 
             //Debug.Log("Motor powers: " + zmqClient.zmqThread.robotPacket.motorPowers);
         }

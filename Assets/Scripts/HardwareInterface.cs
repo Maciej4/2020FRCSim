@@ -31,33 +31,23 @@ public class HardwareInterface : MonoBehaviour
             zmqClient.unityPacket.hardware.AddRange(hardware);
         }
 
-        /*if (zmqClient.isComms())
+        if (zmqClient.isComms())
         {
-            if (zmqClient.zmqThread.robotPacket.hardware.Count != hardware.Count)
-            {
-                zmqClient.zmqThread.robotPacket.hardware.Clear();
-
-                zmqClient.zmqThread.robotPacket.hardware.AddRange(hardware);
-            }
-
             for (int i = 0; i < hardware.Count; i++)
             {
+                // TODO: Fix indexOutOfBoundsException, likely has to do with multithreading
                 try
                 {
-                    hardware[i].CopyValues(zmqClient.zmqThread.robotPacket.hardware[i]);
+                    hardware[i].CopyRelValues(zmqClient.zmqThread.robotPacket.hardware[i]);
                 }
-                catch (ArgumentOutOfRangeException e)
+                catch
                 {
-                    Debug.Log(e);
-                    zmqClient.zmqThread.unityPacket.hardware = this.hardware;
                     return;
                 }
             }
 
             zmqClient.zmqThread.unityPacket.hardware = this.hardware;
-
-            Debug.Log("Hardware length: " + zmqClient.zmqThread.unityPacket.hardware.Count);
-        }*/
+        }
     }
 
     public void ExtractHardware()

@@ -13,9 +13,9 @@ public class CANSparkMax : Hardware, Motor
         strings = new string[0];
     }
 
-    public override string GetHardwareType()
+    public override void CopyRelValues(Hardware other)
     {
-        return type;
+        doubles[0] = other.doubles[0];
     }
 
     public double GetEncoderPos()

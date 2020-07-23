@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TalonFX : Hardware, Motor
+public class TalonSRX : Hardware, Motor
 {
-    public TalonFX(int canID)
+    public TalonSRX(int canID)
     {
-        type = "TalonFX";
+        type = "TalonSRX";
         booleans = new bool[0];
         integers = new int[] { canID };
         doubles = new double[] { 0.0, 0.0 };
