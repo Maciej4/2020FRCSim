@@ -13,11 +13,25 @@ public class HardwareInterface : MonoBehaviour
     void Start()
     {
         ExtractHardware();
+
+        zmqClient.unityPacket.hardware.Clear();
+
+        zmqClient.unityPacket.hardware.AddRange(hardware);
+
+        Debug.Log("Hardware length: " + zmqClient.unityPacket.hardware.Count);
     }
 
     private void FixedUpdate()
     {
-        if (zmqClient.isComms())
+        if (!(zmqClient.zmqThread is null) && !(zmqClient.zmqThread.unityPacket is null)
+            && zmqClient.zmqThread.unityPacket.hardware.Count != hardware.Count) 
+        {
+            zmqClient.unityPacket.hardware.Clear();
+
+            zmqClient.unityPacket.hardware.AddRange(hardware);
+        }
+
+        /*if (zmqClient.isComms())
         {
             if (zmqClient.zmqThread.robotPacket.hardware.Count != hardware.Count)
             {
@@ -26,7 +40,7 @@ public class HardwareInterface : MonoBehaviour
                 zmqClient.zmqThread.robotPacket.hardware.AddRange(hardware);
             }
 
-            /*for (int i = 0; i < hardware.Count; i++)
+            for (int i = 0; i < hardware.Count; i++)
             {
                 try
                 {
@@ -38,12 +52,12 @@ public class HardwareInterface : MonoBehaviour
                     zmqClient.zmqThread.unityPacket.hardware = this.hardware;
                     return;
                 }
-            }*/
+            }
 
             zmqClient.zmqThread.unityPacket.hardware = this.hardware;
 
             Debug.Log("Hardware length: " + zmqClient.zmqThread.unityPacket.hardware.Count);
-        }
+        }*/
     }
 
     public void ExtractHardware()
