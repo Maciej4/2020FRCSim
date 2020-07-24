@@ -8686,6 +8686,7 @@ MonoBehaviour:
   levelDir: C:\TRAINING\level1.exe
   sceneName: level1
   nextLevelName: level2
+  helpURL: https://github.com/Maciej4/2020FRCSim/blob/master/docs/level1.md
   isHidden: 1
 --- !u!1 &2078329884
 GameObject:

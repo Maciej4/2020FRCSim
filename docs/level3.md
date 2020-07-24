@@ -26,10 +26,10 @@ public class Robot extends TimedRobot {
   public TalonFX rm1 = HardwareFactory.newTalonFX(3);
   public TalonFX rm2 = HardwareFactory.newTalonFX(4);
 
-  DoubleSolenoid piston = HardwareFactory.newDoubleSolenoid(0, 1);
+  public DoubleSolenoid piston = HardwareFactory.newDoubleSolenoid(0, 1);
 
   @Override
-  public void robotInit() { 
+  public void robotInit() {
 
   }
 

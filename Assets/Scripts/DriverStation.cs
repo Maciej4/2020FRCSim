@@ -145,7 +145,7 @@ public class DriverStation : MonoBehaviour
         {
             //if (!(goal.GetComponent<PosGoalController>() is null))
             //{
-            goal.GetComponent<PosGoalController>().resetGoal();
+            ((Goal)goal.GetComponent<MonoBehaviour>()).ResetGoal();
             //}
         }
     }

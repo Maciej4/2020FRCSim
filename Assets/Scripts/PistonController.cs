@@ -12,7 +12,7 @@ public class PistonController : MonoBehaviour, Subsystem
 
     public int pistonState = 0;
 
-    private Vector3 pistonIn = new Vector3(0f, 0.12f, 0f);
+    private Vector3 pistonIn = new Vector3(0f, 0.05f, 0f);
     private Vector3 pistonOut = new Vector3(0f, 0.6f, 0f);
 
     void Update()

@@ -17,13 +17,14 @@ public class LevelMenu : MonoBehaviour
     public string levelDir = "C:\\";
     public string sceneName = "";
     public string nextLevelName = "";
+    public string helpURL = "";
 
     public bool isHidden = false;
 
     public List<MenuFile> menuList = new List<MenuFile>()
     {
             new MenuFile("resume.exe", MenuFile.FileAction.NONE),
-            new MenuFile("help.url", MenuFile.FileAction.URL).setUrl("https://github.com/iron-claw-972/Curriculum2020"),
+            new MenuFile("help.url", MenuFile.FileAction.URL),
             new MenuFile("restart.exe", MenuFile.FileAction.SCENE),
             new MenuFile("main_menu.exe", MenuFile.FileAction.SCENE).setScene("MainMenu"),
             new MenuFile(),
@@ -35,6 +36,7 @@ public class LevelMenu : MonoBehaviour
         menuList[menuList.Count - 1].setTitle(levelDir);
         textLines[menuList.Count - 1].text = levelDir;
         menuList[2].setScene(sceneName);
+        menuList[1].setUrl(helpURL);
     }
 
     private void Update()

@@ -30,7 +30,8 @@ public class MenuController : MonoBehaviour
                 "  + Some perspectives allow for you to move your camera with the LEFT MOUSE BUTTON\n" +
                 "- You MUST make an edit to your robot code or else it will not connect to the simulator"),
             new MenuFile("level2.exe", MenuFile.FileAction.SCENE).setScene("level2"),
-            new MenuFile(),
+            new MenuFile("level3.exe", MenuFile.FileAction.SCENE).setScene("level3")
+                .setDescription("In this level you have to use a piston to press a button."),
             new MenuFile(),
             new MenuFile(),
             new MenuFile(),

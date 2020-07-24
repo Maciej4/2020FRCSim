@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PosGoalController : MonoBehaviour, Goal
+public class Lvl3ButtonGoal : MonoBehaviour, Goal
 {
     public Transform goodJobTextTransform;
     public Text goodJobText;
     public DriverStation driverStation;
     public LevelMenu levelMenu;
-    public GameObject prefabGoal;
+    public Rigidbody goalRigidbody;
     private bool isRobotEnabled = false;
     private bool pastIsRobotEnabled = false;
     private float offsetTime = 0.0f;
@@ -19,20 +19,24 @@ public class PosGoalController : MonoBehaviour, Goal
     private float smoothTime = 0.50f;
     private string completionTimeString = "";
 
-    private void OnTriggerEnter(Collider other)
+    public void ResetGoal()
     {
-        if (other.tag.Equals("robot"))
-        {
-            isComplete = true;
-            completionTimeString = (Time.time - offsetTime).ToString("000.00");
-            goodJobText.text = "Press enter to go to next level!\nYou took: " + completionTimeString + " seconds";
-            this.GetComponent<MeshRenderer>().enabled = false;
-            this.GetComponent<BoxCollider>().enabled = false;
-        }
+        isComplete = false;
+        this.transform.position = new Vector3(0f, 0.4549561f, 0.2f);
+        goalRigidbody.isKinematic = false;
     }
 
-    private void Update()
+    void Update()
     {
+        if (transform.position.z < 0.15f && !isComplete)
+        {
+            isComplete = true;
+            goalRigidbody.isKinematic = true;
+            goalRigidbody.velocity = Vector3.zero;
+            completionTimeString = (Time.time - offsetTime).ToString("000.00");
+            goodJobText.text = "Press enter to go to next level!\nYou took: " + completionTimeString + " seconds";
+        }
+
         if (isComplete)
         {
             pastIsComplete = true;
@@ -56,24 +60,5 @@ public class PosGoalController : MonoBehaviour, Goal
         }
 
         pastIsRobotEnabled = isRobotEnabled;
-    }
-
-    public void ResetGoal()
-    {
-        isComplete = false;
-        //goodJobTextTransform.localPosition = Vector3.zero;
-        //goodJobText.text = "";
-        this.GetComponent<MeshRenderer>().enabled = true;
-        this.GetComponent<BoxCollider>().enabled = true;
-        GameObject[] objs = GameObject.FindGameObjectsWithTag("goal");
-
-        if (1 <= objs.Length)
-        {
-            if (!prefabGoal.name.Equals("blankgoal"))
-            {
-                Destroy(objs[0]);
-                Instantiate(prefabGoal);
-            }
-        }
     }
 }
