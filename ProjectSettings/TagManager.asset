@@ -6,6 +6,7 @@ TagManager:
   tags:
   - goal
   - robot
+  - goal2
   layers:
   - Default
   - TransparentFX

@@ -141,7 +141,7 @@ public class DriverStation : MonoBehaviour
         robotTransform.position = new Vector3(0.0f, 0.35f, 5.0f);
         robotTransform.rotation = Quaternion.Euler(new Vector3(0f, 180f, 0f));
         offsetTime = Time.time;
-        foreach (GameObject goal in GameObject.FindGameObjectsWithTag("goal"))
+        foreach (GameObject goal in GameObject.FindGameObjectsWithTag("goal2"))
         {
             //if (!(goal.GetComponent<PosGoalController>() is null))
             //{
