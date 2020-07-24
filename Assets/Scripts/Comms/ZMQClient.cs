@@ -4,13 +4,11 @@ using UnityEngine.Experimental.AI;
 
 public class ZMQClient : MonoBehaviour
 {
-    public UnityPacket unityPacket;
-    public ZMQThread zmqThread;
+    public UnityPacket unityPacket = new UnityPacket();
+    public ZMQThread zmqThread = new ZMQThread();
 
     private void Start()
     {
-        unityPacket = new UnityPacket();
-        zmqThread = new ZMQThread();
         zmqThread.unityPacket = unityPacket;
         zmqThread.Start();
     }

@@ -1,7 +1,9 @@
 ﻿using AsyncIO;
 using NetMQ;
 using NetMQ.Sockets;
+using System;
 using System.Collections.Generic;
+using System.Reflection;
 using UnityEngine;
 
 public class ZMQThread : RunAbleThread
@@ -55,38 +57,11 @@ public class ZMQThread : RunAbleThread
     {
         TempHardwareBox tempHardwareBox = (TempHardwareBox)JsonUtility.FromJson(hardwareJson, typeof(TempHardwareBox));
 
-        switch (tempHardwareBox.type) 
-        {
-            case ("CANSparkMax"): {
-                CANSparkMax tempHardware = new CANSparkMax(0);
-                tempHardware.CopyValues(tempHardwareBox);
-                return tempHardware;
-            }
-            case ("TalonFX"): {
-                TalonFX tempHardware = new TalonFX(0);
-                tempHardware.CopyValues(tempHardwareBox);
-                return tempHardware;
-            }
-            case ("TalonSRX"): {
-                TalonSRX tempHardware = new TalonSRX(0);
-                tempHardware.CopyValues(tempHardwareBox);
-                return tempHardware;
-            }
-            case ("Joystick"): {
-                Joystick tempHardware = new Joystick(0);
-                tempHardware.CopyValues(tempHardwareBox);
-                return tempHardware;
-            }
-            case ("AHRS"):
-            {
-                AHRS tempHardware = new AHRS();
-                tempHardware.CopyValues(tempHardwareBox);
-                return tempHardware;
-            }
-            default: {
-                return null;
-            }
-        }
+        Hardware tempHardware = (Hardware)Activator.CreateInstance(Type.GetType(tempHardwareBox.type));
+
+        tempHardware.CopyValues(tempHardwareBox);
+
+        return tempHardware;
     }
     
     protected override void Run()

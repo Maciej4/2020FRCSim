@@ -8,6 +8,15 @@ public class Joystick : Hardware
     { KeyCode.Alpha0, KeyCode.Alpha1, KeyCode.Alpha2, KeyCode.Alpha3, KeyCode.Alpha4,
       KeyCode.Alpha5, KeyCode.Alpha6, KeyCode.Alpha7, KeyCode.Alpha8, KeyCode.Alpha9 };
 
+    public Joystick()
+    {
+        type = "Joystick";
+        booleans = new bool[] { false, false, false, false, false, false, false, false, false, false };
+        integers = new int[] { 0, 0 };
+        doubles = new double[] { 0.0, 0.0, 0.0, 0.0 };
+        strings = new string[0];
+    }
+
     public Joystick(int joystickID)
     {
         type = "Joystick";

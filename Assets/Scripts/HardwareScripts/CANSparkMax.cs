@@ -4,6 +4,15 @@ using UnityEngine;
 
 public class CANSparkMax : Hardware, Motor
 {
+    public CANSparkMax()
+    {
+        type = "CANSparkMax";
+        booleans = new bool[0];
+        integers = new int[] { 0 };
+        doubles = new double[] { 0.0, 0.0 };
+        strings = new string[0];
+    }
+
     public CANSparkMax(int canID)
     {
         type = "CANSparkMax";

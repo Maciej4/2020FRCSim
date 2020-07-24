@@ -4,6 +4,15 @@ using UnityEngine;
 
 public class TalonSRX : Hardware, Motor
 {
+    public TalonSRX()
+    {
+        type = "TalonSRX";
+        booleans = new bool[0];
+        integers = new int[] { 0 };
+        doubles = new double[] { 0.0, 0.0 };
+        strings = new string[0];
+    }
+
     public TalonSRX(int canID)
     {
         type = "TalonSRX";
