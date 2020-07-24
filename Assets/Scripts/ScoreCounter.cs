@@ -62,7 +62,7 @@ public class ScoreCounter : MonoBehaviour
 
     public void findControlMode()
     {
-        if (zmqClient.zmqThread.connectionStatus)
+        if (zmqClient.isComms())
         {
             controlledBy = "\nExternal Java!";
         }
