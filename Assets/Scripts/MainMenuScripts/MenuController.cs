@@ -73,7 +73,7 @@ public class MenuController : MonoBehaviour
             "Use the UP and DOWN arrow keys and ENTER to navigate this menu."),
         new MenuFile("quit.exe", MenuFile.FileAction.QUIT),
         new MenuFile("", MenuFile.FileAction.DIVIDER),
-        new MenuFolder("SETTINGS", 
+        new MenuFolder("SETTINGS",
             new List<MenuItem>() {
             new MenuFolder(),
             new MenuFolder("CONTROLS",
@@ -181,7 +181,7 @@ public class MenuController : MonoBehaviour
 
     public List<MenuItem> currentDirectory;
 
-    public List<int> directoryPositions = new List<int> {0};
+    public List<int> directoryPositions = new List<int> { 0 };
 
     private MenuFile blankMenuFile = new MenuFile();
 
@@ -211,7 +211,7 @@ public class MenuController : MonoBehaviour
 
         clock.text = "<mspace=68>─" + DateTime.Now.ToString("HH:mm") + "─</mspace>";
 
-        if (Input.GetKeyDown(KeyCode.Return)) 
+        if (Input.GetKeyDown(KeyCode.Return))
         {
             currentDirectory[cursorPos].activate(this);
         }
@@ -254,10 +254,33 @@ public class MenuController : MonoBehaviour
 
     public void setCursorPos(int cursorPos_)
     {
-        this.cursorPos = cursorPos_;
+        cursorPos = cursorPos_;
         squareYPos = 815f;
         squareYPos = squareYPos - cursorPos_ * 100f;
         red.localPosition = new Vector3(-773f, squareYPos, 0);
+    }
+
+    public void clickOnItem(int cursorPos_)
+    {
+        if (Input.GetKey(KeyCode.Return))
+        {
+            return;
+        }
+
+        if (currentDirectory[cursorPos_].GetType() == blankMenuFile.GetType() &&
+            ((MenuFile)currentDirectory[cursorPos_]).getFileAction() == MenuFile.FileAction.NONE &&
+            currentDirectory[cursorPos_].getTitle().Equals(""))
+        {
+            return;
+        }
+
+        if (cursorPos == cursorPos_)
+        {
+            currentDirectory[cursorPos].activate(this);
+            return;
+        }
+
+        setCursorPos(cursorPos_);
     }
 
     public string generateInfoLine(MenuItem menuItem)

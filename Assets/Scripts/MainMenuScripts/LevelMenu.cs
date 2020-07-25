@@ -31,6 +31,8 @@ public class LevelMenu : MonoBehaviour
             new MenuFile("C:\\", MenuFile.FileAction.NONE)
     };
 
+    private MenuFile blankMenuFile = new MenuFile();
+
     private void Start()
     {
         menuList[menuList.Count - 1].setTitle(levelDir);
@@ -74,11 +76,6 @@ public class LevelMenu : MonoBehaviour
             }
             else
             {
-                /**if (!menuList[cursorPos].getSceneToLoad().Equals(SceneManager.GetActiveScene().name))
-                {
-                    Destroy(GameObject.FindGameObjectsWithTag("test")[0]);
-                }*/
-
                 menuList[cursorPos].activate(this);
             }
         }
@@ -126,6 +123,36 @@ public class LevelMenu : MonoBehaviour
         squareYPos = 400f;
         squareYPos = squareYPos - cursorPos_ * 100f;
         red.localPosition = new Vector3(0f, squareYPos, 0);
+    }
+
+    public void clickOnItem(int cursorPos_)
+    {
+        if (Input.GetKey(KeyCode.Return))
+        {
+            return;
+        }
+
+        if (menuList[cursorPos_].GetType() == blankMenuFile.GetType() &&
+            menuList[cursorPos_].getFileAction() == MenuFile.FileAction.NONE &&
+            menuList[cursorPos_].getTitle().Equals(""))
+        {
+            return;
+        }
+
+        if (cursorPos == cursorPos_)
+        {
+            if (cursorPos == 0)
+            {
+                toggleMenu();
+            }
+            else
+            {
+                menuList[cursorPos].activate(this);
+            }
+            return;
+        }
+
+        setCursorPos(cursorPos_);
     }
 
     public void toggleMenu()
