@@ -34,13 +34,13 @@ public class DriveInter : MonoBehaviour
 
             //Debug.Log("l: " + leftPower + ", r: " + rightPower);
 
-            drivebaseController.TankDrive(leftPower, rightPower);
+            //drivebaseController.TankDrive(leftPower, rightPower);
 
-            motors[0].SetEncoderPos(drivebaseController.lx);
-            motors[1].SetEncoderPos(drivebaseController.lx);
+            //motors[0].SetEncoderPos(drivebaseController.lx);
+            //motors[1].SetEncoderPos(drivebaseController.lx);
 
-            motors[2].SetEncoderPos(drivebaseController.rx);
-            motors[3].SetEncoderPos(drivebaseController.rx);
+            //motors[2].SetEncoderPos(drivebaseController.rx);
+            //motors[3].SetEncoderPos(drivebaseController.rx);
 
             //Debug.Log("Motor powers: " + zmqClient.zmqThread.robotPacket.motorPowers);
         }
