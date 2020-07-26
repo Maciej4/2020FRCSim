@@ -7,7 +7,7 @@ public class PosGoalController : MonoBehaviour, Goal
 {
     public Transform goodJobTextTransform;
     public Text goodJobText;
-    public DriverStation driverStation;
+    public RobotEnable robotEnable;
     public LevelMenu levelMenu;
     public GameObject prefabGoal;
     private bool isRobotEnabled = false;
@@ -48,7 +48,7 @@ public class PosGoalController : MonoBehaviour, Goal
             goodJobTextTransform.localPosition = Vector3.SmoothDamp(goodJobTextTransform.localPosition, new Vector3(0f, 900f, 0f), ref velocity, smoothTime);
         }
 
-        isRobotEnabled = driverStation.robotState;
+        isRobotEnabled = robotEnable.RobotState;
 
         if (isRobotEnabled && !pastIsRobotEnabled)
         {

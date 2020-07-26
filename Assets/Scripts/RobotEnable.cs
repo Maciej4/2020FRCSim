@@ -10,9 +10,12 @@ public class RobotEnable : MonoBehaviour, IPointerClickHandler
     private RawImage RawImage;
 
     private readonly Color Red = new Color(255, 0, 0);
+    private readonly Color Yellow = Color.yellow;
     private readonly Color Green = new Color(0, 255, 0);
 
     public bool RobotState = false;
+    public bool IsStateLocked = false;
+    public bool YellowMode = false;    
 
     private void Start()
     {
@@ -20,7 +23,15 @@ public class RobotEnable : MonoBehaviour, IPointerClickHandler
 
         if (RobotState)
         {
-            RawImage.color = Green;
+            if (YellowMode)
+            {
+                RawImage.color = Yellow;
+            }
+            else
+            {
+                RawImage.color = Green;
+            }
+
             Text.text = "Disable";
         }
         else
@@ -45,6 +56,11 @@ public class RobotEnable : MonoBehaviour, IPointerClickHandler
 
     public void ToggleRobotState()
     {
+        if (IsStateLocked)
+        {
+            return;
+        }
+
         if (RobotState)
         {
             RawImage.color = Red;
@@ -53,16 +69,29 @@ public class RobotEnable : MonoBehaviour, IPointerClickHandler
             return;
         }
 
-        RawImage.color = Green;
+        if (YellowMode)
+        {
+            RawImage.color = Yellow;
+        }
+        else
+        { 
+            RawImage.color = Green;
+        }
+        
         Text.text = "Disable";
         RobotState = !RobotState;
     }
 
     public void SetRobotState(bool NewRobotState)
     {
+        bool IsStateLockedTemp = IsStateLocked;
+        IsStateLocked = false;
+
         if (NewRobotState != RobotState)
         {
             ToggleRobotState();
         }
+
+        IsStateLocked = IsStateLockedTemp;
     }
 }

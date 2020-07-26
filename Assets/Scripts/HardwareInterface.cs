@@ -6,14 +6,16 @@ using UnityEngine;
 
 public class HardwareInterface : MonoBehaviour
 {
-    public ZMQClient zmqClient;
+    private ZMQClient zmqClient;
     public List<MonoBehaviour> subsystems;
     public List<Hardware> hardware = new List<Hardware>();
 
     void Start()
     {
-        ExtractHardware();
+        zmqClient = GetComponent<ZMQClient>();
 
+        ExtractHardware();
+        
         zmqClient.unityPacket.hardware.Clear();
 
         zmqClient.unityPacket.hardware.AddRange(hardware);

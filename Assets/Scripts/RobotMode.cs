@@ -13,17 +13,14 @@ public class RobotMode : MonoBehaviour, IPointerClickHandler
     public int RobotState = 0;
     private string[] RobotStates = new string[] { "Teleop", "Auto", "Test", "Practice" };
 
-    public bool LockDropdown = false;
+    public bool IsDropdownLocked = false;
     private bool DropdownState = false;
 
     void Start()
     {
         SetState(RobotState);
 
-        if (LockDropdown)
-        {
-            ArrowBottom.localPosition = new Vector3(77.5200348f, -3.6f, 0f);
-        }
+        SetDropdownLockState(IsDropdownLocked);
     }
 
     public void OpenDropdown()
@@ -33,25 +30,44 @@ public class RobotMode : MonoBehaviour, IPointerClickHandler
         DropdownItems.localPosition = Vector3.zero;
     }
 
-    public void SetState(int NewRobotState)
+    public void CloseDropdown()
     {
         DropdownState = false;
-        RobotState = NewRobotState;
-        Text.text = RobotStates[RobotState];
         ArrowBottom.localPosition = new Vector3(77.5200348f, -12.5999918f, 0f);
         DropdownItems.localPosition = new Vector3(0f, -500f, 0f);
     }
 
+    public void SetDropdownLockState(bool NewDropdownLockState)
+    {
+        IsDropdownLocked = NewDropdownLockState;
+
+        if (IsDropdownLocked)
+        {
+            ArrowBottom.localPosition = new Vector3(77.5200348f, -3.6f, 0f);
+        }
+        else
+        {
+            ArrowBottom.localPosition = new Vector3(77.5200348f, -12.5999918f, 0f);
+        }
+    }
+
+    public void SetState(int NewRobotState)
+    {
+        RobotState = NewRobotState;
+        Text.text = RobotStates[RobotState];
+        CloseDropdown();
+    }
+
     public void OnPointerClick(PointerEventData eventData)
     {
-        if (LockDropdown) 
+        if (IsDropdownLocked) 
         {
             return;
         }
 
         if (DropdownState)
         {
-            SetState(RobotState);
+            CloseDropdown();
             return;
         }
 

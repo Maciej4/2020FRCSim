@@ -15,7 +15,7 @@ public class ZMQThread : RunAbleThread
     public bool connectionStatus = false;
     public double receiveStartTime = 0;
     public double deadTime = 0;
-    public double giveUpTime = 2;
+    private readonly double giveUpTime = 1;
     
     public string jsonify()
     {
