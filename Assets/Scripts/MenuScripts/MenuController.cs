@@ -23,10 +23,10 @@ public class MenuController : MonoBehaviour
             new MenuFolder(),
             new MenuFile("level1.exe", MenuFile.FileAction.SCENE).setScene("level1")
                 .setDescription("Some important controls:\n" +
+                "- ESC opens the level menu\n" +
                 "- W and S mock joystick axis 0\n" +
                 "- A and D mock joystick axis 1\n" +
-                "- Buttons are not yet implemented\n" +
-                "- Press P to change perspective\n" +
+                "- P changes the perspective\n" +
                 "  + Some perspectives allow for you to move your camera with the LEFT MOUSE BUTTON\n" +
                 "- You MUST make an edit to your robot code or else it will not connect to the simulator"),
             new MenuFile("level2.exe", MenuFile.FileAction.SCENE).setScene("level2"),
@@ -69,8 +69,7 @@ public class MenuController : MonoBehaviour
         new MenuFile("readme.txt", MenuFile.FileAction.TEXT).setDescription(
             "This game is designed to simulate a robot running on Java code. " +
             "TRAINING holds several tutorials in robot programming concepts. " +
-            "CHALLENGES holds a simulator for the 2020 FRC game. " +
-            "Use the UP and DOWN arrow keys and ENTER to navigate this menu."),
+            "CHALLENGES holds a simulator for the 2020 FRC game."),
         new MenuFile("quit.exe", MenuFile.FileAction.QUIT),
         new MenuFile("", MenuFile.FileAction.DIVIDER),
         new MenuFolder("SETTINGS",
