@@ -26,6 +26,7 @@ This activity will describe how to use the 2020FRCSim Unity simulator with Java 
 
 1. The repository is located at [this link](https://github.com/Maciej4/NEOBot), if needed follow [these directions on cloning a repository](https://github.com/iron-claw-972/Curriculum2020/blob/master/GithubDesktop.md#3d-cloning-a-repository).
 2. Open the repository using FRC Visual Studio Code.
+ - Note: Use 2020 VS Code. Also, if prompted to import the project into 2020 select no.
 
 ### 3c. Running Java Tests to Link to Sim
 
