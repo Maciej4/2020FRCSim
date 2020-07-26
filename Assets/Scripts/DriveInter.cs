@@ -15,7 +15,7 @@ public class DriveInter : MonoBehaviour
         zmqClient = GetComponent<ZMQClient>();
     }
 
-    void FixedUpdate()
+    private void Update()
     {
         robotEnable.YellowMode = !zmqClient.isComms();
 

@@ -68,16 +68,31 @@ public class DrivebaseController : MonoBehaviour, Subsystem
 
     public void TankDrive(float leftPower, float rightPower)
     {
+        ((Motor)hardware[0]).SetPower(leftPower);
+        ((Motor)hardware[1]).SetPower(leftPower);
+        ((Motor)hardware[2]).SetPower(rightPower);
+        ((Motor)hardware[3]).SetPower(rightPower);
+    }
+    public void ArcadeDrive(float linearPower, float turnPower)
+    {
+        linearPower = Mathf.Clamp((float)linearPower, -1.0f, 1.0f);
+        turnPower = -Mathf.Clamp((float)turnPower, -1.0f, 1.0f);
+
+        TankDrive(turnPower + linearPower, turnPower - linearPower);
+    }
+
+    private void InternalTankDrive(float leftPower, float rightPower)
+    {
         leftPower = Mathf.Clamp((float)leftPower, -1.0f, 1.0f);
         rightPower = Mathf.Clamp((float)rightPower, -1.0f, 1.0f);
 
         float linearPower = (leftPower - rightPower) * 0.5f * maxMotorTorque;
         float turnPower = -(leftPower + rightPower) * 0.5f * maxSteeringPower;
 
-        ArcadeDrive(linearPower, turnPower);
+        InternalArcadeDrive(linearPower, turnPower);
     }
 
-    public void ArcadeDrive(float linearPower, float turnPower)
+    private void InternalArcadeDrive(float linearPower, float turnPower)
     {
         linearPower = maxMotorTorque * Mathf.Clamp((float)linearPower, -1.0f, 1.0f);
         turnPower = maxSteeringPower * Mathf.Clamp((float)turnPower, -1.0f, 1.0f);
@@ -112,7 +127,7 @@ public class DrivebaseController : MonoBehaviour, Subsystem
         float leftPower = (float)(((Motor)hardware[0]).GetPower() + ((Motor)hardware[1]).GetPower()) / 2.0f;
         float rightPower = (float)(((Motor)hardware[2]).GetPower() + ((Motor)hardware[3]).GetPower()) / 2.0f;
 
-        TankDrive(leftPower, rightPower);
+        InternalTankDrive(leftPower, rightPower);
 
         // Encoder simulation
         // TODO: Only measure forward / backward movement.

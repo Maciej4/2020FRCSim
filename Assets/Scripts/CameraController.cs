@@ -10,7 +10,6 @@ public class CameraController : MonoBehaviour
     public Vector3[] positions = new Vector3[] {
         new Vector3(0, 0.275f, -0.5f),
         new Vector3(0, 1f, -2f),
-        //new Vector3(0, 2f, 0),
         new Vector3(-3.432f, 1.5f, 8.5f),
         Vector3.zero
     };
@@ -18,34 +17,31 @@ public class CameraController : MonoBehaviour
     public Vector3 cameraPos = new Vector3(0, 1f, -2f);
 
     public float followDistance = 1.1f;
-    public float followDistanceX = 0f;
+    private float followDistanceX = 0f;
     public float xAngle = 0f;
     public float yAngle = 0.6f;
     public Vector2 startRots = Vector2.zero;
 
     public float followDistanceA = 10.4f;
-    public float followDistanceXA = 0f;
+    private float followDistanceXA = 0f;
     public float xAngleA = -2.584484f;
     public float yAngleA = 0.3417884f;
     public Vector2 startRotsA = Vector2.zero;
 
-    public Vector3 mouseStartPos = Vector3.zero;
-    public Vector2 mouseDelta = Vector2.zero;
+    private Vector3 mouseStartPos = Vector3.zero;
+    private Vector2 mouseDelta = Vector2.zero;
     public float smoothTime = 0.25f;
     private Vector3 velocity = Vector3.zero;
-    //private Vector3 rotVel = Vector3.zero;
 
     public bool orbitMode = true;
 
     public int currentPos = 0;
 
-    // Start is called before the first frame update
     void Start()
     {
         robot = this.transform.parent;
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.P))
