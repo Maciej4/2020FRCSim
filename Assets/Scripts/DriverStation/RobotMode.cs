@@ -11,7 +11,7 @@ public class RobotMode : MonoBehaviour, IPointerClickHandler
     public RectTransform DropdownItems;
 
     public int RobotState = 0;
-    private string[] RobotStates = new string[] { "Teleop", "Auto", "Test", "Practice" };
+    private readonly string[] RobotStates = new string[] { "Teleop", "Auton", "Test", "Practice" };
 
     public bool IsDropdownLocked = false;
     private bool DropdownState = false;

@@ -8,7 +8,7 @@ public class FeedController : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.name.StartsWith("Ball") && (Input.GetKey(KeyCode.Space) || Input.GetKeyDown("joystick button 0")))
+        if (other.name.StartsWith("Ball") && (Input.GetKey(KeyCode.Z) || Input.GetKeyDown("joystick button 0")))
         {
             intakeController.shoot(other.transform);
         }
