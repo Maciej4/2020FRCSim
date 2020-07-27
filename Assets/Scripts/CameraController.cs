@@ -5,7 +5,7 @@ using UnityEngine;
 public class CameraController : MonoBehaviour
 {
     public Transform robot;
-    public Vector3 robotRelRot = new Vector3(10, 0, 0);
+    private Vector3 robotRelRot = new Vector3(10, 0, 0);
 
     public Vector3[] positions = new Vector3[] {
         new Vector3(0, 0.275f, -0.5f),
@@ -14,7 +14,7 @@ public class CameraController : MonoBehaviour
         Vector3.zero
     };
 
-    public Vector3 cameraPos = new Vector3(0, 1f, -2f);
+    private Vector3 cameraPos = new Vector3(0, 1f, -2f);
 
     public float followDistance = 1.1f;
     private float followDistanceX = 0f;
@@ -37,9 +37,20 @@ public class CameraController : MonoBehaviour
 
     public int currentPos = 0;
 
+    public string[] posNames = new string[] {
+        "Robot Cam!",
+        "Robot Orbital Cam!\nUse the Left Mouse button to move the view.",
+        "Corner Tracking Cam!",
+        "Arena Orbital Cam!\nUse the Left Mouse button to move the view."
+    };
+
     void Start()
     {
         robot = this.transform.parent;
+        startRots.x = xAngle;
+        startRots.y = yAngle;
+        startRotsA.x = xAngleA;
+        startRotsA.y = yAngleA;
     }
 
     void Update()

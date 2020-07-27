@@ -688,6 +688,7 @@ GameObject:
   - component: {fileID: 148808318}
   - component: {fileID: 148808317}
   - component: {fileID: 148808316}
+  - component: {fileID: 148808319}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -722,28 +723,31 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   robot: {fileID: 1240901108}
-  robotRelRot: {x: 10, y: 0, z: 0}
   positions:
   - {x: 0, y: 0.275, z: -0.5}
   - {x: 0, y: 1, z: -2}
   - {x: -3.432, y: 1.5, z: 8.5}
   - {x: 0, y: 0, z: 0}
-  cameraPos: {x: 0, y: 1, z: -2}
   followDistance: 1.1
-  followDistanceX: 0
   xAngle: 0
   yAngle: 0.6
   startRots: {x: 0, y: 0}
   followDistanceA: 10.4
-  followDistanceXA: 0
   xAngleA: -2.5844
   yAngleA: 0.3417
   startRotsA: {x: -2.5844, y: 0.3417}
-  mouseStartPos: {x: 0, y: 0, z: 0}
-  mouseDelta: {x: 0, y: 0}
   smoothTime: 0.25
   orbitMode: 1
   currentPos: 3
+  posNames:
+  - Robot Cam!
+  - 'Robot Orbital Cam!
+
+    Use the Left Mouse button to move the view.'
+  - Corner Tracking Cam!
+  - 'Arena Orbital Cam!
+
+    Use the Left Mouse button to move the view.'
 --- !u!81 &148808317
 AudioListener:
   m_ObjectHideFlags: 0
@@ -795,6 +799,19 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
+--- !u!114 &148808319
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 148808314}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d5a2907a7eaf514c80479f16b07c565, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  text: {fileID: 709661531}
 --- !u!1 &172679280
 GameObject:
   m_ObjectHideFlags: 0
@@ -2078,6 +2095,7 @@ RectTransform:
   - {fileID: 2077639812}
   - {fileID: 15936824}
   - {fileID: 1739892113}
+  - {fileID: 709661530}
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3234,6 +3252,101 @@ Transform:
   m_Father: {fileID: 1348331489}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 57.626, y: -31.288, z: -3.271}
+--- !u!1 &709661529
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 709661530}
+  - component: {fileID: 709661532}
+  - component: {fileID: 709661531}
+  - component: {fileID: 709661533}
+  m_Layer: 5
+  m_Name: Camera Text
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &709661530
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 709661529}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 462756072}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 160, y: 30}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &709661531
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 709661529}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FontData:
+    m_Font: {fileID: 12800000, guid: 1f06ae6eecf173d4ead553fdf9e78238, type: 3}
+    m_FontSize: 80
+    m_FontStyle: 0
+    m_BestFit: 0
+    m_MinSize: 0
+    m_MaxSize: 120
+    m_Alignment: 4
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 1
+    m_VerticalOverflow: 1
+    m_LineSpacing: 1
+  m_Text: Orbital Camera!
+--- !u!222 &709661532
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 709661529}
+  m_CullTransparentMesh: 0
+--- !u!114 &709661533
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 709661529}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 1}
+  m_EffectDistance: {x: 4, y: -4}
+  m_UseGraphicAlpha: 1
 --- !u!1 &763333070
 GameObject:
   m_ObjectHideFlags: 0
