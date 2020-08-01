@@ -5,7 +5,7 @@ using UnityEngine;
 public class CameraController : MonoBehaviour
 {
     public Transform robot;
-    private Vector3 robotRelRot = new Vector3(10, 0, 0);
+    public Vector3 robotRelRot = new Vector3(10, 0, 0);
 
     public Vector3[] positions = new Vector3[] {
         new Vector3(0, 0.275f, -0.5f),
