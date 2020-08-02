@@ -7,7 +7,7 @@ public class RobotJoysticks : MonoBehaviour
 {
     private RawImage RawImage;
 
-    private bool JoystickState;
+    private bool JoystickState = false;
 
     private readonly Color Red = new Color(255, 0, 0);
     private readonly Color Green = new Color(0, 255, 0);
@@ -15,6 +15,13 @@ public class RobotJoysticks : MonoBehaviour
     void Start()
     {
         RawImage = GetComponent<RawImage>();
+
+        bool IsJoystickConnected = Input.GetJoystickNames().Length == 0 || Input.GetJoystickNames()[0].Equals("");
+
+        if (IsJoystickConnected != JoystickState)
+        {
+            ToggleJoystickState();
+        }
     }
 
     void Update()
