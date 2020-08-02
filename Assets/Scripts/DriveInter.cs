@@ -27,7 +27,7 @@ public class DriveInter : MonoBehaviour
         if (simpleDriveEnabled && robotEnable.RobotState)
         {
             float linearPower = drivebaseController.maxMotorTorque * Input.GetAxis("Vertical");
-            float turnPower = drivebaseController.maxSteeringPower * Input.GetAxis("Horizontal");
+            float turnPower = 0.5f * drivebaseController.maxSteeringPower * Input.GetAxis("Horizontal");
 
             drivebaseController.ArcadeDrive(linearPower, turnPower);
         }
