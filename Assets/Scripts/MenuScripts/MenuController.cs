@@ -15,7 +15,11 @@ public class MenuController : MonoBehaviour
     public TextMeshProUGUI clock;
     public Transform red;
     public float squareYPos = 759f;
-    public int cursorPos = 0;
+    public int cursorPos = 2;
+    public bool isScrollable = false;
+    public int scrollPos = 0;
+
+    private readonly float scrollThreshold = 0.5f;
 
     public List<MenuItem> root = new List<MenuItem>() {
         new MenuFolder("TRAINING",
@@ -32,18 +36,6 @@ public class MenuController : MonoBehaviour
             new MenuFile("level2.exe", MenuFile.FileAction.SCENE).setScene("level2"),
             new MenuFile("level3.exe", MenuFile.FileAction.SCENE).setScene("level3")
                 .setDescription("In this level you have to use a piston to press a button."),
-            new MenuFile(),
-            new MenuFile(),
-            new MenuFile(),
-            new MenuFile(),
-            new MenuFile(),
-            new MenuFile(),
-            new MenuFile(),
-            new MenuFile(),
-            new MenuFile(),
-            new MenuFile(),
-            new MenuFile(),
-            new MenuFile("C:\\TRAINING\\", MenuFile.FileAction.NONE)
         }),
         new MenuFolder("CHALLENGES",
             new List<MenuItem>() {
@@ -51,20 +43,6 @@ public class MenuController : MonoBehaviour
             new MenuFile("FRC2020.exe", MenuFile.FileAction.SCENE).setScene("FRC2020").setDescription(
                 "The FRC game in 2020. The goal of this game is generally " +
                 "to shoot the yellow balls into the large hexagon."),
-            new MenuFile(),
-            new MenuFile(),
-            new MenuFile(),
-            new MenuFile(),
-            new MenuFile(),
-            new MenuFile(),
-            new MenuFile(),
-            new MenuFile(),
-            new MenuFile(),
-            new MenuFile(),
-            new MenuFile(),
-            new MenuFile(),
-            new MenuFile(),
-            new MenuFile("C:\\CHALLENGES\\", MenuFile.FileAction.NONE)
         }),
         new MenuFile("readme.txt", MenuFile.FileAction.TEXT).setDescription(
             "This game is designed to simulate a robot running on Java code. " +
@@ -79,149 +57,158 @@ public class MenuController : MonoBehaviour
                 new List<MenuItem>() {
                 new MenuFolder(),
                 new MenuFile("temp.url", MenuFile.FileAction.URL).setUrl("https://www.youtube.com/watch?v=dQw4w9WgXcQ"),
-                new MenuFile(),
-                new MenuFile(),
-                new MenuFile(),
-                new MenuFile(),
-                new MenuFile(),
-                new MenuFile(),
-                new MenuFile(),
-                new MenuFile(),
-                new MenuFile(),
-                new MenuFile(),
-                new MenuFile(),
-                new MenuFile(),
-                new MenuFile(),
-                new MenuFile("C:\\SETTINGS\\CONTROLS\\", MenuFile.FileAction.NONE)
             }),
             new MenuFolder("GRAPHICS",
                 new List<MenuItem>() {
                 new MenuFolder(),
                 new MenuFile("temp.url", MenuFile.FileAction.URL).setUrl("https://www.youtube.com/watch?v=dQw4w9WgXcQ"),
-                new MenuFile(),
-                new MenuFile(),
-                new MenuFile(),
-                new MenuFile(),
-                new MenuFile(),
-                new MenuFile(),
-                new MenuFile(),
-                new MenuFile(),
-                new MenuFile(),
-                new MenuFile(),
-                new MenuFile(),
-                new MenuFile(),
-                new MenuFile(),
-                new MenuFile("C:\\SETTINGS\\GRAPHICS\\", MenuFile.FileAction.NONE)
             }),
             new MenuFolder("AUDIO",
                 new List<MenuItem>() {
                 new MenuFolder(),
                 new MenuFile("temp.url", MenuFile.FileAction.URL).setUrl("https://www.youtube.com/watch?v=dQw4w9WgXcQ"),
-                new MenuFile(),
-                new MenuFile(),
-                new MenuFile(),
-                new MenuFile(),
-                new MenuFile(),
-                new MenuFile(),
-                new MenuFile(),
-                new MenuFile(),
-                new MenuFile(),
-                new MenuFile(),
-                new MenuFile(),
-                new MenuFile(),
-                new MenuFile(),
-                new MenuFile("C:\\SETTINGS\\AUDIO\\", MenuFile.FileAction.NONE)
             }),
             new MenuFolder("GAMEPLAY",
                 new List<MenuItem>() {
                 new MenuFolder(),
                 new MenuFile("temp.url", MenuFile.FileAction.URL).setUrl("https://www.youtube.com/watch?v=dQw4w9WgXcQ"),
-                new MenuFile(),
-                new MenuFile(),
-                new MenuFile(),
-                new MenuFile(),
-                new MenuFile(),
-                new MenuFile(),
-                new MenuFile(),
-                new MenuFile(),
-                new MenuFile(),
-                new MenuFile(),
-                new MenuFile(),
-                new MenuFile(),
-                new MenuFile(),
-                new MenuFile("C:\\SETTINGS\\GAMEPLAY\\", MenuFile.FileAction.NONE)
             }),
-            new MenuFile(),
-            new MenuFile(),
-            new MenuFile(),
-            new MenuFile(),
-            new MenuFile(),
-            new MenuFile(),
-            new MenuFile(),
-            new MenuFile(),
-            new MenuFile(),
-            new MenuFile(),
-            new MenuFile("C:\\SETTINGS\\", MenuFile.FileAction.NONE)
         }),
         new MenuFile("github.url", MenuFile.FileAction.URL).setUrl("https://github.com/Maciej4/2020FRCSim")
             .setDescription("This URL links to: \n\nhttps://github.com/Maciej4/2020FRCSim\n\n" +
             "Which is the github repository that stores the source " +
             "code for this project."),
-        new MenuFile(),
-        new MenuFile(),
-        new MenuFile(),
-        new MenuFile(),
-        new MenuFile(),
-        new MenuFile(),
-        new MenuFile(),
-        new MenuFile(),
-        new MenuFile("C:\\", MenuFile.FileAction.NONE)
     };
 
     public List<MenuItem> currentDirectory;
 
-    public List<int> directoryPositions = new List<int> { 0 };
+    public List<int> directoryPositions = new List<int>();
+    public List<string> directoryNames = new List<string>();
 
     private MenuFile blankMenuFile = new MenuFile();
+
+    private void Start()
+    {
+        currentDirectory = root;
+        RenderMenuText();
+        RenderDescriptionArea();
+    }
 
     void Update()
     {
         if (currentDirectory is null)
         {
             currentDirectory = root;
+            directoryPositions = new List<int>();
+            directoryNames = new List<string>();
         }
 
-        if (Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.S))
+        bool scroll = scrollThreshold < Mathf.Abs(Input.mouseScrollDelta.y);
+        bool scrollDown = Mathf.Sign(Input.mouseScrollDelta.y) < 0f;
+
+        if (Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.S) || (scroll && scrollDown))
         {
             moveCursorDown();
         }
-        else if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W))
+        else if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W) || (scroll && !scrollDown))
         {
             moveCursorUp();
         }
-
-        for (int i = 0; i < textLines.Count; i++)
-        {
-            textLines[i].text = currentDirectory[i].getItemString();
-        }
-
-        infoLine.text = generateInfoLine(currentDirectory[cursorPos]);
-        description.text = currentDirectory[cursorPos].getDescription();
 
         clock.text = "<mspace=68>─" + DateTime.Now.ToString("HH:mm") + "─</mspace>";
 
         if (Input.GetKeyDown(KeyCode.Return))
         {
-            currentDirectory[cursorPos].activate(this);
+            currentDirectory[cursorPos + scrollPos].activate(this);
+            scrollPos = 0;
+            RenderMenuText();
         }
+    }
+
+    private void RenderMenuText()
+    {
+        for (int i = 0; i < textLines.Count; i++)
+        {
+            textLines[i].text = "";
+        }
+
+        if (currentDirectory.Count <= 15)
+        {
+            isScrollable = false;
+
+            for (int i = 0; i < currentDirectory.Count; i++)
+            {
+                textLines[i].text = currentDirectory[i].getItemString();
+            }
+        }
+        else
+        {
+            isScrollable = true;
+
+            for (int i = 0; i < 14; i++)
+            {
+                textLines[i].text = currentDirectory[i].getItemString();
+            }
+
+            textLines[14].text = "<mspace=68>     \\/         \\/</mspace>";
+        }
+
+        string directoryText = "C:\\";
+
+        for (int i = 0; i < directoryNames.Count; i++)
+        {
+            directoryText += directoryNames[i] + "\\";
+        }
+
+        textLines[15].text = "<mspace=68>" + directoryText + "</mspace>";
+    }
+
+    private void RenderMenuTextScroll()
+    {
+        if (currentDirectory.Count - scrollPos == 15)
+        {
+            for (int i = scrollPos; i < scrollPos + 15; i++)
+            {
+                textLines[i - scrollPos].text = currentDirectory[i].getItemString();
+            }
+        }
+        else
+        {
+            for (int i = scrollPos; i < scrollPos + 14; i++)
+            {
+                textLines[i - scrollPos].text = currentDirectory[i].getItemString();
+            }
+
+            textLines[14].text = "<mspace=68>     \\/         \\/</mspace>";
+        }
+
+        if (scrollPos != 0)
+        {
+            textLines[0].text = "<mspace=68>     /\\         /\\</mspace>";
+        }
+    }
+
+    private void RenderDescriptionArea()
+    {
+        infoLine.text = generateInfoLine(currentDirectory[cursorPos + scrollPos]);
+        description.text = currentDirectory[cursorPos + scrollPos].getDescription();
     }
 
     public void moveCursorUp()
     {
+        if (isScrollable && scrollPos != 0 && cursorPos == 1)
+        {
+            scrollPos--;
+            RenderDescriptionArea();
+            RenderMenuTextScroll();
+            return;
+        }
+
         if (cursorPos == 0)
         {
             squareYPos = 815f;
             red.localPosition = new Vector3(-773f, squareYPos, 0);
+            RenderDescriptionArea();
             return;
         }
 
@@ -229,18 +216,26 @@ public class MenuController : MonoBehaviour
         cursorPos--;
 
         red.localPosition = new Vector3(-773f, squareYPos, 0);
+
+        RenderDescriptionArea();
     }
 
     public void moveCursorDown()
     {
+        if (isScrollable && scrollPos != currentDirectory.Count - 15 && cursorPos == 13)
+        {
+            scrollPos++;
+            RenderDescriptionArea();
+            RenderMenuTextScroll();
+            return;
+        }
+
         if (cursorPos == 14)
         {
             return;
         }
 
-        if (currentDirectory[cursorPos + 1].GetType() == blankMenuFile.GetType() &&
-            ((MenuFile)currentDirectory[cursorPos + 1]).getFileAction() == MenuFile.FileAction.NONE &&
-            currentDirectory[cursorPos + 1].getTitle().Equals(""))
+        if (IsInvalidCursorPos(cursorPos + 1))
         {
             return;
         }
@@ -249,6 +244,8 @@ public class MenuController : MonoBehaviour
         cursorPos++;
 
         red.localPosition = new Vector3(-773f, squareYPos, 0);
+
+        RenderDescriptionArea();
     }
 
     public void setCursorPos(int cursorPos_)
@@ -257,6 +254,7 @@ public class MenuController : MonoBehaviour
         squareYPos = 815f;
         squareYPos = squareYPos - cursorPos_ * 100f;
         red.localPosition = new Vector3(-773f, squareYPos, 0);
+        RenderDescriptionArea();
     }
 
     public void clickOnItem(int cursorPos_)
@@ -266,20 +264,32 @@ public class MenuController : MonoBehaviour
             return;
         }
 
-        if (currentDirectory[cursorPos_].GetType() == blankMenuFile.GetType() &&
-            ((MenuFile)currentDirectory[cursorPos_]).getFileAction() == MenuFile.FileAction.NONE &&
-            currentDirectory[cursorPos_].getTitle().Equals(""))
+        if (IsInvalidCursorPos(cursorPos_))
         {
             return;
         }
 
         if (cursorPos == cursorPos_)
         {
-            currentDirectory[cursorPos].activate(this);
+            currentDirectory[cursorPos + scrollPos].activate(this);
+            scrollPos = 0;
+            RenderMenuText();
             return;
         }
 
         setCursorPos(cursorPos_);
+    }
+
+    private bool IsInvalidCursorPos(int cursorPos_)
+    {
+        if (currentDirectory.Count < cursorPos_ + 1 || currentDirectory[cursorPos_] is null)
+        {
+            return true;
+        }
+
+        return currentDirectory[cursorPos_].GetType() == blankMenuFile.GetType() &&
+            ((MenuFile)currentDirectory[cursorPos_]).getFileAction() == MenuFile.FileAction.NONE &&
+            currentDirectory[cursorPos_].getTitle().Equals("");
     }
 
     public string generateInfoLine(MenuItem menuItem)

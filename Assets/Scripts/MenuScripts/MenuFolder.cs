@@ -54,11 +54,13 @@ public class MenuFolder : MenuItem
 
             menuController.setCursorPos(menuController.directoryPositions[menuController.directoryPositions.Count - 1]);
             menuController.directoryPositions.RemoveAt(menuController.directoryPositions.Count - 1);
+            menuController.directoryNames.RemoveAt(menuController.directoryNames.Count - 1);
         }
         else
         {
             menuController.currentDirectory = folder;
             menuController.directoryPositions.Add(menuController.cursorPos);
+            menuController.directoryNames.Add(title);
             menuController.setCursorPos(0);
         }
     }
