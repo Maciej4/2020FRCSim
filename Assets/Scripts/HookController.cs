@@ -47,7 +47,6 @@ public class HookController : MonoBehaviour
         }
 
         telescopeBox.isHooked = true;
-        ropeSpringJoint.spring = 10000f;
         ropeRenderer.enabled = true;
         hookJoint = hook.gameObject.AddComponent<FixedJoint>();
         hookJoint.connectedBody = other.GetComponent<Rigidbody>();
