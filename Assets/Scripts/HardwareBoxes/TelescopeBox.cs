@@ -5,15 +5,15 @@ using UnityEngine;
 public class TelescopeBox : MonoBehaviour
 {
     public Transform[] telescopeStages;
-
     public Transform[] topStage;
 
-    private readonly float maxHeight = 0.48f;
+    public RobotEnable robotEnable;
 
     private float goalHeight = 0.01f;
     private float currentHeight = 0.01f;
     public float raisedHeight = 0.45f;
     public bool isRaised = false;
+    public bool isHooked = false;
 
     void Start()
     {
@@ -22,7 +22,7 @@ public class TelescopeBox : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.E))
+        if (Input.GetKeyDown(KeyCode.E) && robotEnable.RobotState)
         {
             isRaised = !isRaised;
         }
@@ -30,12 +30,10 @@ public class TelescopeBox : MonoBehaviour
         if (isRaised)
         {
             goalHeight = raisedHeight;
-            //hookTilt.useSpring = true;
         }
         else
         {
             goalHeight = 0.01f;
-            //hookTilt.useSpring = false;
         }
 
         currentHeight = Mathf.Lerp(currentHeight, goalHeight, 0.01f);
@@ -43,6 +41,11 @@ public class TelescopeBox : MonoBehaviour
         for (int i = 0; i < telescopeStages.Length; i++)
         {
             telescopeStages[i].localPosition = new Vector3(0f, currentHeight * (i + 1) + 0.26f, 0f);
+        }
+
+        if (isHooked)
+        {
+            return;
         }
 
         for (int i = 0; i < topStage.Length; i++)
