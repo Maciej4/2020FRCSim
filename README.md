@@ -1,6 +1,6 @@
 # 2020FRCSim
 
-[image](https://raw.githubusercontent.com/Maciej4/2020FRCSim/master/docs/images/frc2020_level_robot.png)
+![image](https://raw.githubusercontent.com/Maciej4/2020FRCSim/master/docs/images/frc2020_level_robot.png)
 
 The starter guide is found at [this link](https://github.com/Maciej4/2020FRCSim/blob/master/docs/StarterGuide.md).
 
