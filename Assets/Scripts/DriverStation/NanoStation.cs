@@ -28,6 +28,8 @@ public class NanoStation : MonoBehaviour
     private bool pastZMQIsComms = false;
     private bool stopRobotComms = false;
 
+    private Vector3 robotStartPos;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -36,7 +38,7 @@ public class NanoStation : MonoBehaviour
         robotRigidbody.velocity = Vector3.zero;
         robotRigidbody.angularVelocity = Vector3.zero;
         robotRigidbody.isKinematic = true;
-        robotTransform.position = new Vector3(0.0f, 0.35f, 5.0f);
+        robotStartPos = robotTransform.position;
         robotTransform.rotation = Quaternion.Euler(new Vector3(0f, 180f, 0f));
         offsetTime = Time.time;
 
@@ -99,7 +101,7 @@ public class NanoStation : MonoBehaviour
         robotRigidbody.velocity = Vector3.zero;
         robotRigidbody.angularVelocity = Vector3.zero;
         robotRigidbody.isKinematic = true;
-        robotTransform.position = new Vector3(0.0f, 0.35f, 5.0f);
+        robotTransform.position = robotStartPos;
         robotTransform.rotation = Quaternion.Euler(new Vector3(0f, 180f, 0f));
         offsetTime = Time.time;
         foreach (GameObject goal in GameObject.FindGameObjectsWithTag("goal2"))
