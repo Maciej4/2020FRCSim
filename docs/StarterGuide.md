@@ -45,6 +45,8 @@ frc.robot.RobotTest > simulateRobot STANDARD_OUT
     Awaiting Unity to start robot period...
 ```
 
+**Important Note: In order for the tests to run, there has to be a change to the code since the tests were last run. If you do not want to change your code, commenting and uncommenting a print statement is one way to fulfil this requirement. Otherwise, the tests do not run and the code doesn't link with the simulator.**
+
 4. At this point, navigate back to the Unity Sim. The `Communications` indicator should now be green.
 5. Press `SPACE` or left click on the red `Enable` to enable the robot.
   - Note: The central area on the simplified Driver Station, looks like the following:
