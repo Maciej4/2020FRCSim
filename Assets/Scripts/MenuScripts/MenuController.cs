@@ -55,12 +55,14 @@ public class MenuController : MonoBehaviour
             new MenuFolder(),
             new MenuSetting(MenuSetting.Option.QUALITY, new String[]{"LOWEST >", "< LOW  >", "<MEDIUM>", "< HIGH >", "<HIGHER>", "< ULTRA "})
                 .setDescription(
-                "The visual quality, affects a variety of visual settings\n" +
-                "including the texture, shadow, and anti-aliasing quality.\n" +
-                "Generally lower quality means higher performance." +
-                "Use the LEFT/RIGHT ARROW KEYS\n" +
-                "to change the selected option."),
-            new MenuSetting(MenuSetting.Option.FULLSCREEN, new String[]{"TRUE   >", "<  FALSE"}),
+                "The visual quality, affects the textures, shadows, " +
+                "anti-aliasing, etc. Generally lower " +
+                "quality means higher performance.\n\n" +
+                "Use the LEFT/RIGHT ARROW KEYS to change this option."),
+            new MenuSetting(MenuSetting.Option.FULLSCREEN, new String[]{" FULL  >", "< WINDOW"})
+                .setDescription(
+                "Whether the game is in fullscreen or windowed mode.\n\n" +
+                "Use the LEFT/RIGHT ARROW KEYS to change this option.")
         }),
         new MenuFile("github.url", MenuFile.FileAction.URL).setUrl("https://github.com/Maciej4/2020FRCSim")
             .setDescription("This URL links to: \n\nhttps://github.com/Maciej4/2020FRCSim\n\n" +
