@@ -53,26 +53,14 @@ public class MenuController : MonoBehaviour
         new MenuFolder("SETTINGS",
             new List<MenuItem>() {
             new MenuFolder(),
-            new MenuFolder("CONTROLS",
-                new List<MenuItem>() {
-                new MenuFolder(),
-                new MenuFile("temp.url", MenuFile.FileAction.URL).setUrl("https://www.youtube.com/watch?v=dQw4w9WgXcQ"),
-            }),
-            new MenuFolder("GRAPHICS",
-                new List<MenuItem>() {
-                new MenuFolder(),
-                new MenuFile("temp.url", MenuFile.FileAction.URL).setUrl("https://www.youtube.com/watch?v=dQw4w9WgXcQ"),
-            }),
-            new MenuFolder("AUDIO",
-                new List<MenuItem>() {
-                new MenuFolder(),
-                new MenuFile("temp.url", MenuFile.FileAction.URL).setUrl("https://www.youtube.com/watch?v=dQw4w9WgXcQ"),
-            }),
-            new MenuFolder("GAMEPLAY",
-                new List<MenuItem>() {
-                new MenuFolder(),
-                new MenuFile("temp.url", MenuFile.FileAction.URL).setUrl("https://www.youtube.com/watch?v=dQw4w9WgXcQ"),
-            }),
+            new MenuSetting(MenuSetting.Option.QUALITY, new String[]{"LOWEST >", "< LOW  >", "<MEDIUM>", "< HIGH >", "<HIGHER>", "< ULTRA "})
+                .setDescription(
+                "The visual quality, affects a variety of visual settings\n" +
+                "including the texture, shadow, and anti-aliasing quality.\n" +
+                "Generally lower quality means higher performance." +
+                "Use the LEFT/RIGHT ARROW KEYS\n" +
+                "to change the selected option."),
+            new MenuSetting(MenuSetting.Option.FULLSCREEN, new String[]{"TRUE   >", "<  FALSE"}),
         }),
         new MenuFile("github.url", MenuFile.FileAction.URL).setUrl("https://github.com/Maciej4/2020FRCSim")
             .setDescription("This URL links to: \n\nhttps://github.com/Maciej4/2020FRCSim\n\n" +
@@ -122,6 +110,20 @@ public class MenuController : MonoBehaviour
             currentDirectory[cursorPos + scrollPos].activate(this);
             scrollPos = 0;
             RenderMenuText();
+        }
+
+        if (currentDirectory[cursorPos + scrollPos].getTitle() == "SETTING")
+        {
+            if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.A))
+            {
+                ((MenuSetting)currentDirectory[cursorPos + scrollPos]).moveOptionLeft();
+                RenderMenuText();
+            }
+            else if (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D))
+            {
+                ((MenuSetting)currentDirectory[cursorPos + scrollPos]).moveOptionRight();
+                RenderMenuText();
+            }
         }
     }
 
@@ -304,6 +306,10 @@ public class MenuController : MonoBehaviour
         {
             outputString += "directory: ";
             return outputString + menuItem.getTitle() + "</mspace>";
+        }
+        else if (menuItem.getTitle() == "SETTING")
+        {
+            return "config";
         }
 
         switch (((MenuFile)menuItem).getFileAction())
