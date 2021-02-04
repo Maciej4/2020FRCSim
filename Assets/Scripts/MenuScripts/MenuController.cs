@@ -36,6 +36,8 @@ public class MenuController : MonoBehaviour
             new MenuFile("level2.exe", MenuFile.FileAction.SCENE).setScene("level2"),
             new MenuFile("level3.exe", MenuFile.FileAction.SCENE).setScene("level3")
                 .setDescription("In this level you have to use a piston to press a button."),
+            new MenuFile("sandbox.exe", MenuFile.FileAction.SCENE).setScene("sandbox")
+                .setDescription("This level is a flat sandbox."),
         }),
         new MenuFolder("CHALLENGES",
             new List<MenuItem>() {
