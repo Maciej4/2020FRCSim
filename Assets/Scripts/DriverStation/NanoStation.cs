@@ -15,7 +15,8 @@ public class NanoStation : MonoBehaviour
     public RobotEnable robotEnable;
     public RobotMode robotMode;
 
-    private Rigidbody robotRigidbody;
+    //private Rigidbody robotRigidbody;
+    private ArticulationBody robotRigidbody;
 
     private float offsetTime;
     private float timeNow;
@@ -31,13 +32,16 @@ public class NanoStation : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        robotRigidbody = robotTransform.GetComponent<Rigidbody>();
+        //robotRigidbody = robotTransform.GetComponent<Rigidbody>();
+        robotRigidbody = robotTransform.GetComponent<ArticulationBody>();
 
         robotRigidbody.velocity = Vector3.zero;
         robotRigidbody.angularVelocity = Vector3.zero;
-        robotRigidbody.isKinematic = true;
-        robotTransform.position = new Vector3(0.0f, 0.35f, 5.0f);
-        robotTransform.rotation = Quaternion.Euler(new Vector3(0f, 180f, 0f));
+        //robotRigidbody.isKinematic = true;
+        //robotTransform.position = new Vector3(0.0f, 0.35f, 5.0f);
+        //robotTransform.rotation = Quaternion.Euler(new Vector3(0f, 180f, 0f));
+        robotRigidbody.immovable = true;
+        robotRigidbody.TeleportRoot(new Vector3(0.0f, 0.35f, 5.0f), Quaternion.Euler(new Vector3(0f, 180f, 0f)));
         offsetTime = Time.time;
 
         robotMode.SetDropdownLockState(lockRobotMode);
@@ -60,7 +64,8 @@ public class NanoStation : MonoBehaviour
             if (!pastRobotState)
             {
                 robotMode.SetDropdownLockState(true);
-                robotRigidbody.isKinematic = false;
+                //robotRigidbody.isKinematic = false;
+                robotRigidbody.immovable = false;
             }
 
             SetPacketRobotMode(robotMode.RobotState + 1);
@@ -98,9 +103,11 @@ public class NanoStation : MonoBehaviour
     {
         robotRigidbody.velocity = Vector3.zero;
         robotRigidbody.angularVelocity = Vector3.zero;
-        robotRigidbody.isKinematic = true;
-        robotTransform.position = new Vector3(0.0f, 0.35f, 5.0f);
-        robotTransform.rotation = Quaternion.Euler(new Vector3(0f, 180f, 0f));
+        //robotRigidbody.isKinematic = true;
+        //robotTransform.position = new Vector3(0.0f, 0.35f, 5.0f);
+        //robotTransform.rotation = Quaternion.Euler(new Vector3(0f, 180f, 0f));
+        robotRigidbody.immovable = true;
+        robotRigidbody.TeleportRoot(new Vector3(0.0f, 0.35f, 5.0f), Quaternion.Euler(new Vector3(0f, 180f, 0f)));
         offsetTime = Time.time;
         foreach (GameObject goal in GameObject.FindGameObjectsWithTag("goal2"))
         {

@@ -4205,7 +4205,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "<mspace=68>\u2500\u2500\u2500\u2500\u25002020FRCSim\u2500v0.2.4\u2500</mspace>"
+  m_text: "<mspace=68>\u2500\u2500\u2500\u2500\u25002020FRCSim\u2500v0.2.5\u2500</mspace>"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 0660308a9943df64fb1823d6fb2f4afc, type: 2}
   m_sharedMaterial: {fileID: -3788278918521154948, guid: 0660308a9943df64fb1823d6fb2f4afc,
